@@ -1,0 +1,87 @@
+<nav
+  class="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
+  [class.glass-card]="isScrolled()"
+  [class.bg-luxelle]="!isScrolled()"
+>
+  <div class="section-container flex items-center justify-between h-20">
+    <!-- Logo -->
+    <div class="flex items-center gap-2">
+      <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-rose-gold to-warm-gold flex-center">
+        <span class="text-luxelle-dark font-bold text-lg">L</span>
+      </div>
+      <span class="text-2xl font-bold text-gradient">Luxelle</span>
+    </div>
+
+    <!-- Desktop Navigation -->
+    <div class="hidden md:flex items-center gap-8">
+      <a
+        *ngFor="let link of navigationLinks"
+        [href]="link.href"
+        class="text-luxelle-secondary hover:text-rose-gold transition-colors"
+      >
+        {{ link.label }}
+      </a>
+    </div>
+
+    <!-- Right Actions -->
+    <div class="flex items-center gap-4">
+      <!-- Theme Toggle -->
+      <button
+        (click)="toggleTheme()"
+        class="p-2 rounded-lg hover:bg-rose-gold/10 transition-colors"
+        [attr.aria-label]="isDark() ? 'Switch to light mode' : 'Switch to dark mode'"
+      >
+        <lucide-icon name="sun" *ngIf="isDark()" class="w-5 h-5 text-warm-gold" ></lucide-icon>
+        <lucide-icon name="moon" *ngIf="!isDark()" class="w-5 h-5 text-rose-gold" ></lucide-icon>
+      </button>
+
+      <!-- Book Appointment Button -->
+      <app-button
+        variant="primary"
+        size="md"
+        class="hidden sm:block"
+        (onClick)="scrollToBooking()"
+      >
+        Book Appointment
+      </app-button>
+
+      <!-- Mobile Menu Toggle -->
+      <button
+        (click)="toggleMobileMenu()"
+        class="md:hidden p-2 rounded-lg hover:bg-rose-gold/10 transition-colors"
+        [attr.aria-label]="isMobileMenuOpen() ? 'Close menu' : 'Open menu'"
+      >
+        <lucide-icon name="menu" *ngIf="!isMobileMenuOpen()" class="w-6 h-6" ></lucide-icon>
+        <lucide-icon name="x" *ngIf="isMobileMenuOpen()" class="w-6 h-6" ></lucide-icon>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div
+    *ngIf="isMobileMenuOpen()"
+    class="md:hidden border-t border-rose-gold/10 bg-luxelle-card"
+  >
+    <div class="section-container py-4 flex flex-col gap-4">
+      <a
+        *ngFor="let link of navigationLinks"
+        [href]="link.href"
+        class="text-luxelle-secondary hover:text-rose-gold transition-colors py-2"
+        (click)="isMobileMenuOpen.set(false)"
+      >
+        {{ link.label }}
+      </a>
+      <app-button
+        variant="primary"
+        size="md"
+        class="w-full"
+        (onClick)="scrollToBooking()"
+      >
+        Book Appointment
+      </app-button>
+    </div>
+  </div>
+</nav>
+
+<!-- Spacer for fixed navbar -->
+<div class="h-20"></div>

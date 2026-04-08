@@ -45,40 +45,40 @@ export class BookingService {
 
     // Full Name validation
     if (!booking.fullName || booking.fullName.trim() === '') {
-      errors.fullName = 'Full Name is required';
+      errors['fullName'] = 'Full Name is required';
     } else if (booking.fullName.trim().length < 2) {
-      errors.fullName = 'Full Name must be at least 2 characters';
+      errors['fullName'] = 'Full Name must be at least 2 characters';
     }
 
     // Phone Number validation
     if (!booking.phone || booking.phone.trim() === '') {
-      errors.phone = 'Phone Number is required';
+      errors['phone'] = 'Phone Number is required';
     } else if (!this.isValidPhoneNumber(booking.phone)) {
-      errors.phone = 'Phone Number must be a valid format';
+      errors['phone'] = 'Phone Number must be a valid format';
     }
 
     // Email validation
     if (!booking.email || booking.email.trim() === '') {
-      errors.email = 'Email is required';
+      errors['email'] = 'Email is required';
     } else if (!this.isValidEmail(booking.email)) {
-      errors.email = 'Email must be a valid email address';
+      errors['email'] = 'Email must be a valid email address';
     }
 
     // Preferred Date validation
     if (!booking.preferredDate) {
-      errors.preferredDate = 'Preferred Date is required';
+      errors['preferredDate'] = 'Preferred Date is required';
     } else if (this.isPastDate(booking.preferredDate)) {
-      errors.preferredDate = 'Preferred Date must be in the future';
+      errors['preferredDate'] = 'Preferred Date must be in the future';
     }
 
     // Preferred Time validation
     if (!booking.preferredTime || booking.preferredTime.trim() === '') {
-      errors.preferredTime = 'Preferred Time is required';
+      errors['preferredTime'] = 'Preferred Time is required';
     }
 
     // Service Type validation
     if (!booking.serviceType || booking.serviceType.trim() === '') {
-      errors.serviceType = 'Service Type is required';
+      errors['serviceType'] = 'Service Type is required';
     }
 
     return errors;

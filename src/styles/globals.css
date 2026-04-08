@@ -208,7 +208,7 @@ textarea::placeholder {
 
 /* Link Styles */
 a {
-  @apply text-accent-primary hover:text-accent-secondary transition-colors;
+  @apply transition-colors;
   color: var(--accent-primary);
 }
 

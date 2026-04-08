@@ -6,26 +6,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
   selector: 'app-input',
   standalone: true,
   imports: [CommonModule],
-  template: `
-    <div class="flex flex-col gap-2">
-      <label *ngIf="label()" [for]="id()" class="text-sm font-medium text-luxelle-secondary">
-        {{ label() }}
-        <span *ngIf="required()" class="text-rose-gold">*</span>
-      </label>
-      <input
-        [id]="id()"
-        [type]="type()"
-        [placeholder]="placeholder()"
-        [value]="value()"
-        (input)="onInput($event)"
-        (blur)="onTouched()"
-        [disabled]="disabled()"
-        [required]="required()"
-        class="px-4 py-3 rounded-lg bg-luxelle-card text-luxelle border border-rose-gold/20 focus:border-rose-gold focus:ring-2 focus:ring-rose-gold/30 outline-none transition-all"
-      />
-      <span *ngIf="error()" class="text-sm text-red-400">{{ error() }}</span>
-    </div>
-  `,
+  templateUrl: './input.component.html',
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,

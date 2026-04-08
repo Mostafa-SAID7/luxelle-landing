@@ -5,11 +5,7 @@ import { CommonModule } from '@angular/common';
   selector: 'app-card',
   standalone: true,
   imports: [CommonModule],
-  template: `
-    <div [class]="getCardClasses()">
-      <ng-content></ng-content>
-    </div>
-  `,
+  templateUrl: './card.component.html',
 })
 export class CardComponent {
   hoverable = input(true);

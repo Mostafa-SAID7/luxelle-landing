@@ -2,68 +2,13 @@ import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ButtonComponent } from '../../shared/components/ui/button/button.component';
 import { fadeInUp } from '../../shared/animations/animations';
-import { ArrowDown } from 'lucide-angular';
+import { LucideAngularModule, ArrowDown } from 'lucide-angular';
 
 @Component({
   selector: 'app-hero',
   standalone: true,
-  imports: [CommonModule, ButtonComponent, ArrowDown],
-  template: `
-    <section
-      id="home"
-      class="relative min-h-screen flex items-center justify-center overflow-hidden pt-20"
-    >
-      <!-- Gradient Background with Animated Particles -->
-      <div class="absolute inset-0 z-0">
-        <div
-          class="absolute inset-0 bg-gradient-to-br from-luxelle-dark via-luxelle-dark to-rose-gold/10"
-        ></div>
-        <!-- Particle-like elements using CSS -->
-        <div class="absolute w-96 h-96 bg-rose-gold/5 rounded-full blur-3xl top-10 left-10 animate-pulse"></div>
-        <div class="absolute w-96 h-96 bg-warm-gold/5 rounded-full blur-3xl bottom-20 right-20 animate-pulse" style="animation-delay: 1s;"></div>
-      </div>
-
-      <!-- Content -->
-      <div class="relative z-10 section-container text-center">
-        <div [@fadeInUp] class="space-y-6">
-          <!-- Main Headline -->
-          <h1 class="text-5xl md:text-6xl lg:text-7xl font-bold leading-tight">
-            <span class="text-gradient">Luxelle</span>
-            <br />
-            <span class="text-luxelle-secondary">Where Beauty Meets Elegance</span>
-          </h1>
-
-          <!-- Subtitle -->
-          <p class="text-lg md:text-xl text-luxelle-tertiary max-w-2xl mx-auto leading-relaxed">
-            Experience luxury skincare, wellness, and beauty treatments in a sophisticated atmosphere
-          </p>
-
-          <!-- CTA Buttons -->
-          <div class="flex flex-col sm:flex-row gap-4 justify-center pt-8">
-            <app-button
-              variant="primary"
-              size="lg"
-              (onClick)="scrollToServices()"
-            >
-              Discover Our Services
-            </app-button>
-            <app-button
-              variant="outline"
-              size="lg"
-              (onClick)="scrollToBooking()"
-            >
-              Book Now
-            </app-button>
-          </div>
-        </div>
-
-        <!-- Scroll Indicator -->
-        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-          <ArrowDown class="w-6 h-6 text-rose-gold" />
-        </div>
-      </div>
-    </section>
-  `,
+  imports: [CommonModule, ButtonComponent, LucideAngularModule],
+  templateUrl: './hero.component.html',
   animations: [fadeInUp],
 })
 export class HeroComponent implements OnInit {
