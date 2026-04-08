@@ -1,0 +1,261 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+/* CSS Variables for Theme */
+:root {
+  --bg-primary: #0f0f0f;
+  --bg-secondary: #1f1f1f;
+  --text-primary: #ffffff;
+  --text-secondary: #f5f0eb;
+  --text-tertiary: #cccccc;
+  --accent-primary: #e8b4bc;
+  --accent-secondary: #d4af37;
+  --accent-highlight: #f8c1d4;
+}
+
+html.light {
+  --bg-primary: #faf8f5;
+  --bg-secondary: #ffffff;
+  --text-primary: #1f1f1f;
+  --text-secondary: #4a4a4a;
+  --text-tertiary: #999999;
+  --accent-primary: #e8b4bc;
+  --accent-secondary: #d4af37;
+  --accent-highlight: #f8c1d4;
+}
+
+/* Base Styles */
+* {
+  @apply transition-colors duration-300;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-luxelle text-luxelle font-sans;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--accent-primary);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-secondary);
+}
+
+/* Glassmorphism Effect */
+.glass-card {
+  @apply backdrop-blur-md bg-opacity-80 border border-opacity-20;
+  background-color: rgba(31, 31, 31, 0.8);
+  border-color: rgba(232, 180, 188, 0.2);
+}
+
+html.light .glass-card {
+  background-color: rgba(255, 255, 255, 0.8);
+  border-color: rgba(232, 180, 188, 0.15);
+}
+
+/* Glow Effects */
+.luxelle-glow {
+  box-shadow: 0 0 20px rgba(232, 180, 188, 0.3);
+}
+
+.luxelle-glow-gold {
+  box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
+}
+
+.luxelle-glow-intense {
+  box-shadow: 0 0 30px rgba(232, 180, 188, 0.5);
+}
+
+/* Button Styles */
+.luxelle-button {
+  @apply px-6 py-3 rounded-lg font-medium transition-all duration-300;
+  @apply hover:scale-105 active:scale-95;
+  background-color: var(--accent-primary);
+  color: var(--bg-primary);
+}
+
+.luxelle-button:hover {
+  box-shadow: 0 0 20px rgba(232, 180, 188, 0.4);
+}
+
+.luxelle-button-outline {
+  @apply px-6 py-3 rounded-lg font-medium transition-all duration-300;
+  @apply border-2 hover:scale-105 active:scale-95;
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
+  background-color: transparent;
+}
+
+.luxelle-button-outline:hover {
+  background-color: rgba(232, 180, 188, 0.1);
+}
+
+/* Text Gradient */
+.text-gradient {
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Card Styles */
+.luxelle-card {
+  @apply rounded-xl p-6 transition-all duration-300;
+  background-color: var(--bg-secondary);
+  border: 1px solid rgba(232, 180, 188, 0.1);
+}
+
+.luxelle-card:hover {
+  @apply shadow-lg;
+  box-shadow: 0 0 20px rgba(232, 180, 188, 0.2);
+  transform: translateY(-4px);
+}
+
+/* Section Spacing */
+.section-padding {
+  @apply py-16 md:py-24 lg:py-32;
+}
+
+.section-container {
+  @apply max-w-7xl mx-auto px-4 md:px-8 lg:px-12;
+}
+
+/* Heading Styles */
+h1, h2, h3, h4, h5, h6 {
+  @apply font-bold tracking-tight;
+}
+
+h1 {
+  @apply text-4xl md:text-5xl lg:text-6xl;
+}
+
+h2 {
+  @apply text-3xl md:text-4xl lg:text-5xl;
+}
+
+h3 {
+  @apply text-2xl md:text-3xl;
+}
+
+/* Underline Accent */
+.accent-underline {
+  position: relative;
+  display: inline-block;
+}
+
+.accent-underline::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+  border-radius: 2px;
+}
+
+/* Focus Styles for Accessibility */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  @apply outline-none ring-2 ring-offset-2;
+  ring-color: var(--accent-primary);
+  outline-offset: 2px;
+}
+
+/* Input Styles */
+input,
+textarea,
+select {
+  @apply bg-luxelle-card text-luxelle border border-opacity-20 rounded-lg;
+  border-color: rgba(232, 180, 188, 0.2);
+  color: var(--text-primary);
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  @apply outline-none ring-2;
+  ring-color: var(--accent-primary);
+  border-color: var(--accent-primary);
+}
+
+/* Placeholder Styles */
+input::placeholder,
+textarea::placeholder {
+  color: var(--text-tertiary);
+}
+
+/* Link Styles */
+a {
+  @apply text-accent-primary hover:text-accent-secondary transition-colors;
+  color: var(--accent-primary);
+}
+
+a:hover {
+  color: var(--accent-secondary);
+}
+
+/* Utility Classes */
+.flex-center {
+  @apply flex items-center justify-center;
+}
+
+.grid-auto {
+  @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6;
+}
+
+.gradient-bg {
+  background: linear-gradient(135deg, rgba(232, 180, 188, 0.1), rgba(212, 175, 55, 0.05));
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    @apply !transition-none !animate-none;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* Light Mode Adjustments */
+html.light {
+  .glass-card {
+    background-color: rgba(255, 255, 255, 0.8);
+    border-color: rgba(232, 180, 188, 0.15);
+  }
+
+  .luxelle-card {
+    background-color: var(--bg-secondary);
+    border-color: rgba(232, 180, 188, 0.15);
+  }
+
+  input,
+  textarea,
+  select {
+    background-color: var(--bg-secondary);
+    border-color: rgba(232, 180, 188, 0.15);
+  }
+}
