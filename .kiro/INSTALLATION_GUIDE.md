@@ -1,102 +1,89 @@
-# Luxelle Landing Page - Installation & First Run Guide
+# Luxelle Landing Page - Installation Guide
 
-## ✅ Already Installed & Configured
+## Prerequisites
+- Node.js 18+ (LTS recommended)
+- npm 9+
 
-Your project already has the following properly configured:
+## Installation Steps
 
-- ✅ **Angular 21/22** with Standalone Components
-- ✅ **Tailwind CSS** with custom color palette (dark/light modes)
-- ✅ **PostCSC & Autoprefixer** configured
-- ✅ **Angular Animations** module
-- ✅ **ngx-toastr** for notifications
-- ✅ **globals.css** with glassmorphism, glow effects, and utilities
-- ✅ **tailwind.config.ts** with custom colors, animations, and shadows
-- ✅ **app.config.ts** with providers configured
-
-## 📦 Missing Dependencies to Install
-
-You need to install these additional packages:
-
+### 1. Install Dependencies
 ```bash
-npm install ngx-particles tsparticles-engine tsparticles-slim lucide-angular
+npm install --legacy-peer-deps
 ```
 
-### What Each Package Does:
-- **ngx-particles**: Angular wrapper for ts-particles (hero section particle effects)
-- **tsparticles-engine**: Core particle engine
-- **tsparticles-slim**: Lightweight particle preset
-- **lucide-angular**: Icon library for service cards and UI elements
+The `--legacy-peer-deps` flag is needed because lucide-angular@0.263.0 has peer dependency requirements for Angular 13-16, but we're using Angular 18. This is safe and the package works fine with Angular 18.
 
-## 🚀 First Run Steps
-
-### Step 1: Install Missing Dependencies
+### 2. Verify Installation
 ```bash
-npm install ngx-particles tsparticles-engine tsparticles-slim lucide-angular
+npm list @angular/core lucide-angular ngx-toastr
 ```
 
-### Step 2: Verify Installation
-```bash
-npm list ngx-particles lucide-angular
-```
-
-### Step 3: Start Development Server
-```bash
-ng serve
-```
-
-Or if you prefer npm:
+### 3. Start Development Server
 ```bash
 npm start
 ```
 
-### Step 4: Open in Browser
-Navigate to: `http://localhost:4200`
+The application will be available at `http://localhost:4200`
 
-## 📋 What's Already Done (No Action Needed)
+### 4. Build for Production
+```bash
+npm run build:prod
+```
 
-### Configuration Files
-- ✅ `tailwind.config.ts` - Custom colors, animations, shadows
-- ✅ `postcss.config.js` - PostCSS pipeline
-- ✅ `src/styles/globals.css` - Global styles, utilities, theme variables
-- ✅ `src/styles/tailwind.css` - Tailwind directives
-- ✅ `src/app/app.config.ts` - Angular providers (Router, Animations, Toastr)
+## Required Dependencies
 
-### Styling System
-- ✅ Dark mode colors: `#0F0F0F` background, `#E8B4BC` rose gold accent
-- ✅ Light mode colors: `#FAF8F5` background with appropriate accents
-- ✅ Glassmorphism utilities: `.glass-card` class
-- ✅ Glow effects: `.luxelle-glow`, `.luxelle-glow-gold`
-- ✅ Button styles: `.luxelle-button`, `.luxelle-button-outline`
-- ✅ Animations: `fade-in-up`, `shimmer`, `glow-pulse`, etc.
-- ✅ CSS Variables for theme switching
+### Core Angular Packages
+- `@angular/animations` - Animation support
+- `@angular/common` - Common utilities
+- `@angular/compiler` - Template compilation
+- `@angular/core` - Core framework
+- `@angular/forms` - Form handling (Reactive Forms)
+- `@angular/platform-browser` - Browser platform
+- `@angular/platform-browser-dynamic` - Dynamic platform
+- `@angular/router` - Routing
 
-### Services Already Exist
-- ✅ `src/app/core/services/theme.service.ts` - Theme management
-- ✅ `src/app/core/services/booking.service.ts` - Booking logic
-- ✅ `src/app/core/services/notification.service.ts` - Toast notifications
+### UI & Styling
+- `lucide-angular` - Icon library
+- `ngx-toastr` - Toast notifications
+- `tailwindcss` - Utility-first CSS framework
+- `autoprefixer` - PostCSS plugin for vendor prefixes
+- `postcss` - CSS transformation tool
 
-### Components Already Exist
-- ✅ `src/app/features/hero/hero.component.ts`
-- ✅ `src/app/features/about/about.component.ts`
-- ✅ `src/app/features/services/services.component.ts`
-- ✅ `src/app/features/pricing/pricing.component.ts`
-- ✅ `src/app/features/gallery/gallery.component.ts`
-- ✅ `src/app/features/booking/booking.component.ts`
-- ✅ `src/app/shared/components/ui/button/button.component.ts`
-- ✅ `src/app/shared/components/ui/card/card.component.ts`
-- ✅ `src/app/shared/components/ui/input/input.component.ts`
+### State Management & Utilities
+- `rxjs` - Reactive programming library
+- `tslib` - TypeScript runtime library
+- `zone.js` - Zone management for Angular
 
-## 🎯 Next Steps After Installation
+### Development Tools
+- `@angular/cli` - Angular command-line interface
+- `@angular/compiler-cli` - Compiler for AOT builds
+- `@angular-devkit/build-angular` - Build tools
+- `typescript` - TypeScript compiler
+- `karma` - Test runner
+- `jasmine-core` - Testing framework
+- `fast-check` - Property-based testing
 
-1. **Install dependencies** (see Step 1 above)
-2. **Start dev server** with `ng serve`
-3. **Open tasks.md** in the spec folder
-4. **Begin Phase 1 tasks** - Most setup is already done, focus on:
-   - Configuring ngx-particles
-   - Creating remaining UI components
-   - Implementing feature components
+## Troubleshooting
 
-## 📝 Project Structure
+### Peer Dependency Warnings
+If you see warnings about peer dependencies, use `--legacy-peer-deps` flag:
+```bash
+npm install --legacy-peer-deps
+```
+
+### Module Not Found Errors
+If you get "Cannot find module" errors:
+1. Delete `node_modules` folder
+2. Delete `package-lock.json`
+3. Run `npm install --legacy-peer-deps` again
+
+### Port Already in Use
+If port 4200 is already in use:
+```bash
+npm start -- --port 4300
+```
+
+## Project Structure
 
 ```
 src/
@@ -105,84 +92,46 @@ src/
 │   │   ├── constants/
 │   │   ├── models/
 │   │   └── services/
+│   ├── features/
+│   │   ├── about/
+│   │   ├── booking/
+│   │   ├── gallery/
+│   │   ├── hero/
+│   │   ├── pricing/
+│   │   └── services/
+│   ├── layout/
+│   │   ├── footer/
+│   │   └── navbar/
 │   ├── shared/
 │   │   ├── animations/
 │   │   ├── components/
 │   │   ├── directives/
 │   │   └── particles/
-│   ├── features/
-│   │   ├── hero/
-│   │   ├── about/
-│   │   ├── services/
-│   │   ├── pricing/
-│   │   ├── gallery/
-│   │   └── booking/
-│   ├── layout/
 │   ├── app.component.ts
-│   ├── app.routes.ts
-│   └── app.config.ts
+│   ├── app.config.ts
+│   └── app.routes.ts
 ├── styles/
-│   ├── globals.css ✅
-│   └── tailwind.css ✅
-├── tailwind.config.ts ✅
-├── postcss.config.js ✅
+│   ├── globals.css
+│   └── tailwind.css
+├── index.html
 └── main.ts
 ```
 
-## ⚠️ Important Notes
+## Available Scripts
 
-### No Duplicates
-- Do NOT reinstall Tailwind CSS (already configured)
-- Do NOT reconfigure PostCSC (already done)
-- Do NOT recreate globals.css (already complete)
-- Do NOT reinstall Angular Animations (already in app.config.ts)
-- Do NOT reinstall ngx-toastr (already configured)
+- `npm start` - Start development server
+- `npm run build` - Build for development
+- `npm run build:prod` - Build for production
+- `npm run watch` - Watch mode for development
+- `npm test` - Run tests in watch mode
+- `npm run test:run` - Run tests once
+- `npm run lint` - Run linter
 
-### Only Install
-- `ngx-particles` (for hero section particles)
-- `tsparticles-engine` (particle engine)
-- `tsparticles-slim` (lightweight presets)
-- `lucide-angular` (icons for services)
+## Notes
 
-## 🔧 Troubleshooting
-
-### If `ng serve` fails:
-```bash
-# Clear node_modules and reinstall
-rm -rf node_modules package-lock.json
-npm install
-ng serve
-```
-
-### If particles don't work:
-```bash
-# Verify ngx-particles is installed
-npm list ngx-particles
-
-# If missing, install it
-npm install ngx-particles tsparticles-engine tsparticles-slim
-```
-
-### If icons don't show:
-```bash
-# Verify lucide-angular is installed
-npm list lucide-angular
-
-# If missing, install it
-npm install lucide-angular
-```
-
-## 📚 Documentation References
-
-- **Requirements**: `.kiro/specs/luxelle-landing-page/requirements.md`
-- **Design**: `.kiro/specs/luxelle-landing-page/design.md`
-- **Tasks**: `.kiro/specs/luxelle-landing-page/tasks.md`
-
-## ✨ Ready to Start?
-
-1. Run: `npm install ngx-particles tsparticles-engine tsparticles-slim lucide-angular`
-2. Run: `ng serve`
-3. Open: `http://localhost:4200`
-4. Start implementing tasks from `tasks.md`
-
-Happy coding! 🚀
+- All components are standalone Angular components
+- State management uses Angular Signals
+- Styling uses Tailwind CSS with custom configuration
+- Forms use Angular Reactive Forms
+- Icons from lucide-angular
+- Notifications via ngx-toastr
