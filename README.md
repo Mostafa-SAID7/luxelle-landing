@@ -5,6 +5,7 @@
 ![Angular](https://img.shields.io/badge/Angular-DD0031?style=for-the-badge&logo=angular&logoColor=white)
 ![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)
 ![GitHub Actions](https://img.shields.io/badge/github%20actions-%232671E5.svg?style=for-the-badge&logo=githubactions&logoColor=white)
+![License](https://img.shields.io/badge/license-MIT-blue.svg?style=for-the-badge)
 
 Welcome to the **Luxelle Landing Page** project repository. This project serves as a performant, visually dynamic landing page for the Luxelle brand, featuring responsive design, component-based modularity, and automated deployment pipelines.
 
@@ -25,6 +26,8 @@ This project adheres to strict open source governance standards found within the
 - Have a security concern? Read our **[Security Policy](.github/SECURITY.md)**.
 - Read through our expectations in the **[Code of Conduct](.github/CODE_OF_CONDUCT.md)**.
 - Funding or Sponsorship queries can be viewed via **[Funding](.github/FUNDING.yml)**.
+- Need help? Navigate to our **[Support Guidelines](.github/SUPPORT.md)**.
+- Track project updates inside our **[Changelog](CHANGELOG.md)**.
 
 ## 🚀 Quick Start
 
@@ -45,4 +48,4 @@ npm start
 
 ## ⚖️ License
 
-All Rights Reserved.
+Distributed under the MIT License. See **[LICENSE](LICENSE)** for more information.
