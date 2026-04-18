@@ -1,6 +1,6 @@
 [build]
   command = "npm run build:prod"
-  publish = "dist/luxelle-landing-page/browser"
+  publish = "dist/luxelle-landing-page"
 
 [build.environment]
   NODE_VERSION = "22.14.0"
