@@ -1,8 +1,8 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ButtonComponent } from '../../shared/components/ui/button/button.component';
 import { fadeInUp } from '../../shared/animations/animations';
-import { LucideAngularModule, ArrowDown } from 'lucide-angular';
+import { LucideAngularModule } from 'lucide-angular';
 
 @Component({
   selector: 'app-hero',
@@ -11,22 +11,12 @@ import { LucideAngularModule, ArrowDown } from 'lucide-angular';
   templateUrl: './hero.component.html',
   animations: [fadeInUp],
 })
-export class HeroComponent implements OnInit {
-  ngOnInit(): void {
-    // Hero component initialized
-  }
-
+export class HeroComponent {
   scrollToServices(): void {
-    const servicesSection = document.getElementById('services');
-    if (servicesSection) {
-      servicesSection.scrollIntoView({ behavior: 'smooth' });
-    }
+    document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' });
   }
 
   scrollToBooking(): void {
-    const bookingSection = document.getElementById('booking');
-    if (bookingSection) {
-      bookingSection.scrollIntoView({ behavior: 'smooth' });
-    }
+    document.getElementById('booking')?.scrollIntoView({ behavior: 'smooth' });
   }
 }

@@ -1,19 +1,22 @@
 import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ScrollRevealDirective } from '../../shared/directives/scroll-reveal.directive';
-import { CardComponent } from '../../shared/components/ui/card/card.component';
 import { GALLERY_IMAGES } from '../../core/constants/app.constants';
-import { LucideAngularModule, X } from 'lucide-angular';
+import { LucideAngularModule } from 'lucide-angular';
 
 @Component({
   selector: 'app-gallery',
   standalone: true,
-  imports: [CommonModule, ScrollRevealDirective, CardComponent, LucideAngularModule],
+  imports: [CommonModule, ScrollRevealDirective, LucideAngularModule],
   templateUrl: './gallery.component.html',
 })
 export class GalleryComponent {
   galleryImages = GALLERY_IMAGES;
   selectedImage = signal<(typeof GALLERY_IMAGES)[0] | null>(null);
+
+  isFeatured(index: number): boolean {
+    return index === 0 || index === 5 || index === 6 || index === 7;
+  }
 
   openLightbox(image: (typeof GALLERY_IMAGES)[0]): void {
     this.selectedImage.set(image);
@@ -22,6 +25,6 @@ export class GalleryComponent {
 
   closeLightbox(): void {
     this.selectedImage.set(null);
-    document.body.style.overflow = 'auto';
+    document.body.style.overflow = '';
   }
 }

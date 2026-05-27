@@ -146,18 +146,14 @@ export const SOCIAL_LINKS = [
 ];
 
 export const GALLERY_IMAGES = [
-  { id: '1',  title: 'Luxury Skincare',    category: 'Skincare',    image: '/assets/images/gallery/gallery-skincare.png',  alt: 'Luxury skincare facial treatment with premium serums and glowing skin' },
-  { id: '2',  title: 'Hair Styling',       category: 'Hair',        image: '/assets/images/gallery/gallery-hair.png',      alt: 'Professional hair styling and blow dry in upscale Luxelle salon' },
-  { id: '3',  title: 'Makeup Artistry',    category: 'Makeup',      image: '/assets/images/gallery/gallery-makeup.png',    alt: 'Professional full-glam makeup application by Luxelle makeup artist' },
-  { id: '4',  title: 'Spa Treatment',      category: 'Spa',         image: '/assets/images/gallery/gallery-spa.png',       alt: 'Relaxing hot stone massage spa treatment with candles and white towels' },
-  { id: '5',  title: 'Lash Extensions',    category: 'Lashes',      image: '/assets/images/gallery/gallery-lashes.png',    alt: 'Professional eyelash extension treatment for fluttery long lashes' },
-  { id: '6',  title: 'Nail Art & Nails',   category: 'Nails',       image: '/assets/images/gallery/gallery-nails.png',     alt: 'Luxury nail art and rose gold gel manicure at Luxelle beauty salon' },
-  { id: '7',  title: 'Facial Treatment',   category: 'Facial',      image: '/assets/images/gallery/gallery-facial.png',    alt: 'Specialized LED facial treatment and advanced skincare ritual' },
-  { id: '8',  title: 'Wellness Session',   category: 'Wellness',    image: '/assets/images/gallery/gallery-wellness.png',  alt: 'Personalized beauty and wellness consultation at Luxelle center' },
-  { id: '9',  title: 'Premium Ambiance',   category: 'Ambiance',    image: '/assets/images/gallery/gallery-spa.png',       alt: 'Luxelle premium spa lounge with warm candle ambient lighting' },
-  { id: '10', title: 'Relaxation Area',    category: 'Ambiance',    image: '/assets/images/gallery/gallery-wellness.png',  alt: 'Luxelle relaxation and consultation lounge with plush seating' },
-  { id: '11', title: 'Treatment Room',     category: 'Ambiance',    image: '/assets/images/gallery/gallery-facial.png',    alt: 'Private luxury treatment room with white linens and rose petals' },
-  { id: '12', title: 'Skincare Ritual',    category: 'Skincare',    image: '/assets/images/gallery/gallery-skincare.png',  alt: 'Premium skincare ritual with organic products and expert technique' },
+  { id: '1', title: 'Luxury Skincare',  category: 'Skincare', image: '/assets/images/gallery/gallery-skincare.png', alt: 'Luxury skincare facial treatment with premium serums and glowing skin' },
+  { id: '2', title: 'Hair Styling',     category: 'Hair',     image: '/assets/images/gallery/gallery-hair.png',     alt: 'Professional hair styling and blow dry in upscale Luxelle salon' },
+  { id: '3', title: 'Makeup Artistry',  category: 'Makeup',   image: '/assets/images/gallery/gallery-makeup.png',   alt: 'Professional full-glam makeup application by Luxelle makeup artist' },
+  { id: '4', title: 'Spa Treatment',    category: 'Spa',      image: '/assets/images/gallery/gallery-spa.png',      alt: 'Relaxing hot stone massage spa treatment with candles and white towels' },
+  { id: '5', title: 'Lash Extensions',  category: 'Lashes',   image: '/assets/images/gallery/gallery-lashes.png',   alt: 'Professional eyelash extension treatment for fluttery long lashes' },
+  { id: '6', title: 'Nail Art',         category: 'Nails',    image: '/assets/images/gallery/gallery-nails.png',    alt: 'Luxury nail art and rose gold gel manicure at Luxelle beauty salon' },
+  { id: '7', title: 'Facial Treatment', category: 'Facial',   image: '/assets/images/gallery/gallery-facial.png',   alt: 'Specialized LED facial treatment and advanced skincare ritual' },
+  { id: '8', title: 'Wellness Session', category: 'Wellness', image: '/assets/images/gallery/gallery-wellness.png', alt: 'Personalized beauty and wellness consultation at Luxelle center' },
 ];
 
 export const THEME_STORAGE_KEY = 'luxelle-theme';

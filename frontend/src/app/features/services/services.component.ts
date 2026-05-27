@@ -1,29 +1,20 @@
 import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ScrollRevealDirective } from '../../shared/directives/scroll-reveal.directive';
-import { CardComponent } from '../../shared/components/ui/card/card.component';
-import { ButtonComponent } from '../../shared/components/ui/button/button.component';
 import { SERVICES } from '../../core/constants/app.constants';
 import { CartService } from '../../core/services/cart.service';
-import * as LucideIcons from 'lucide-angular';
+import { LucideAngularModule } from 'lucide-angular';
 
 @Component({
   selector: 'app-services',
   standalone: true,
-  imports: [
-    CommonModule,
-    ScrollRevealDirective,
-    CardComponent,
-    ButtonComponent,
-    LucideIcons.LucideAngularModule,
-  ],
+  imports: [CommonModule, ScrollRevealDirective, LucideAngularModule],
   templateUrl: './services.component.html',
 })
 export class ServicesComponent {
-  services   = SERVICES;
+  services    = SERVICES;
   cartService = inject(CartService);
-
-  addedIds = signal<string[]>([]);
+  addedIds    = signal<string[]>([]);
 
   isAdded(id: string): boolean {
     return this.addedIds().includes(id);
