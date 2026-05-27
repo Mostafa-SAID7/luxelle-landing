@@ -10,6 +10,7 @@ import { GalleryComponent } from './features/gallery/gallery.component';
 import { BookingComponent } from './features/booking/booking.component';
 import { PageLoaderComponent } from './shared/components/ui/page-loader/page-loader.component';
 import { ConfirmationModalComponent } from './shared/components/ui/modal/confirmation-modal.component';
+import { CartDrawerComponent } from './features/cart/cart-drawer.component';
 
 @Component({
   selector: 'app-root',
@@ -26,10 +27,12 @@ import { ConfirmationModalComponent } from './shared/components/ui/modal/confirm
     BookingComponent,
     PageLoaderComponent,
     ConfirmationModalComponent,
+    CartDrawerComponent,
   ],
   template: `
     <app-page-loader></app-page-loader>
     <app-confirmation-modal></app-confirmation-modal>
+    <app-cart-drawer></app-cart-drawer>
     <div class="min-h-screen bg-luxelle text-luxelle">
       <app-navbar></app-navbar>
       <main>

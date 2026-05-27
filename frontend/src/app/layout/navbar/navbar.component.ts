@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { ThemeService } from '../../core/services/theme.service';
+import { CartService } from '../../core/services/cart.service';
 import { ButtonComponent } from '../../shared/components/ui/button/button.component';
 import { NAVIGATION_LINKS } from '../../core/constants/app.constants';
 import { LucideAngularModule, Moon, Sun, Menu, X } from 'lucide-angular';
@@ -14,6 +15,7 @@ import { LucideAngularModule, Moon, Sun, Menu, X } from 'lucide-angular';
 })
 export class NavbarComponent implements OnInit, OnDestroy {
   private themeService = inject(ThemeService);
+  cartService           = inject(CartService);
 
   navigationLinks = NAVIGATION_LINKS;
   isScrolled = signal(false);

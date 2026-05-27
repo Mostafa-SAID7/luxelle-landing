@@ -1,4 +1,4 @@
-import { LucideAngularModule, Sparkles, Heart, Award, Calendar, Clock, Phone, Mail, User, FileText, X, ArrowDown, ArrowRight, Check, Scissors, Palette, Droplet, Eye, Hand, MapPin, Facebook, Instagram, Twitter, Linkedin, Moon, Sun, Menu, ZoomIn, CalendarCheck, Loader, Image, AlertCircle, Star, ChevronLeft, ChevronRight, ChevronDown, Trash2, AlertTriangle, Info, CheckCircle2 } from 'lucide-angular';
+import { LucideAngularModule, Sparkles, Heart, Award, Calendar, Clock, Phone, Mail, User, FileText, X, ArrowDown, ArrowRight, Check, Scissors, Palette, Droplet, Eye, Hand, MapPin, Facebook, Instagram, Twitter, Linkedin, Moon, Sun, Menu, ZoomIn, CalendarCheck, Loader, Image, AlertCircle, Star, ChevronLeft, ChevronRight, ChevronDown, Trash2, AlertTriangle, Info, CheckCircle2, ShoppingBag, Minus, Plus, Package } from 'lucide-angular';
 import { ApplicationConfig, importProvidersFrom } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { provideAnimations } from '@angular/platform-browser/animations';
@@ -7,7 +7,7 @@ import { routes } from './app.routes';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    importProvidersFrom(LucideAngularModule.pick({ Sparkles, Heart, Award, Calendar, Clock, Phone, Mail, User, FileText, X, ArrowDown, ArrowRight, Check, Scissors, Palette, Droplet, Eye, Hand, MapPin, Facebook, Instagram, Twitter, Linkedin, Moon, Sun, Menu, ZoomIn, CalendarCheck, Loader, Image, AlertCircle, Star, ChevronLeft, ChevronRight, ChevronDown, Trash2, AlertTriangle, Info, CheckCircle2 })),
+    importProvidersFrom(LucideAngularModule.pick({ Sparkles, Heart, Award, Calendar, Clock, Phone, Mail, User, FileText, X, ArrowDown, ArrowRight, Check, Scissors, Palette, Droplet, Eye, Hand, MapPin, Facebook, Instagram, Twitter, Linkedin, Moon, Sun, Menu, ZoomIn, CalendarCheck, Loader, Image, AlertCircle, Star, ChevronLeft, ChevronRight, ChevronDown, Trash2, AlertTriangle, Info, CheckCircle2, ShoppingBag, Minus, Plus, Package })),
     provideRouter(routes),
     provideAnimations(),
     provideToastr({

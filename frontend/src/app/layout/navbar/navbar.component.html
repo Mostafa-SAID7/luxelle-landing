@@ -44,6 +44,24 @@
         <lucide-icon name="moon" *ngIf="!isDark()" class="w-4 h-4 text-rose-gold"></lucide-icon>
       </button>
 
+      <!-- Cart button -->
+      <button
+        (click)="cartService.open()"
+        class="relative w-9 h-9 rounded-xl flex items-center justify-center
+               text-luxelle-tertiary hover:text-rose-gold hover:bg-rose-gold/10
+               transition-all duration-200"
+        aria-label="Open cart"
+      >
+        <lucide-icon name="shopping-bag" class="w-4 h-4"></lucide-icon>
+        <span
+          *ngIf="cartService.totalItems() > 0"
+          class="absolute -top-1 -right-1 min-w-[18px] h-[18px] px-1
+                 rounded-full bg-rose-gold text-[9px] font-bold
+                 flex items-center justify-center text-white
+                 animate-scale-in"
+        >{{ cartService.totalItems() }}</span>
+      </button>
+
       <!-- Book button -->
       <app-button
         variant="primary"
@@ -51,7 +69,7 @@
         class="hidden sm:flex"
         (onClick)="scrollToBooking()"
       >
-        Book Appointment
+        Book Now
       </app-button>
 
       <!-- Mobile menu toggle -->
