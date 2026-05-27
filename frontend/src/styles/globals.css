@@ -413,6 +413,93 @@ select:focus-visible {
   outline-offset: 3px;
 }
 
+/* ─── Toaster (ngx-toastr) ───────────────────────────────────── */
+.toast-container .ngx-toastr {
+  border-radius: 1rem !important;
+  padding: 1rem 1.25rem !important;
+  min-width: 300px !important;
+  max-width: 380px !important;
+  box-shadow: 0 12px 40px -8px rgba(0,0,0,0.45), 0 4px 12px rgba(0,0,0,0.2) !important;
+  border: 1px solid transparent !important;
+  background-position: 1.1rem center !important;
+  background-size: 1.1rem !important;
+  font-family: 'Inter', system-ui, sans-serif !important;
+  backdrop-filter: blur(12px);
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+.toast-container .ngx-toastr:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 16px 48px -8px rgba(0,0,0,0.5) !important;
+}
+
+.toast-container .ngx-toastr .toast-title {
+  font-size: 0.875rem !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.01em !important;
+  margin-bottom: 2px !important;
+}
+
+.toast-container .ngx-toastr .toast-message {
+  font-size: 0.8125rem !important;
+  font-weight: 400 !important;
+  opacity: 0.85 !important;
+  line-height: 1.5 !important;
+}
+
+.toast-container .ngx-toastr .toast-progress {
+  height: 2px !important;
+  border-radius: 0 0 1rem 1rem !important;
+  opacity: 0.5 !important;
+}
+
+/* Success toast */
+.toast-container .toast-success {
+  background-color: rgba(16, 20, 18, 0.92) !important;
+  border-color: rgba(74, 222, 128, 0.25) !important;
+  color: #f0fdf4 !important;
+}
+.toast-container .toast-success .toast-progress { background: #4ade80 !important; }
+
+/* Error toast */
+.toast-container .toast-error {
+  background-color: rgba(20, 14, 14, 0.92) !important;
+  border-color: rgba(248, 113, 113, 0.25) !important;
+  color: #fff1f2 !important;
+}
+.toast-container .toast-error .toast-progress { background: #f87171 !important; }
+
+/* Warning toast */
+.toast-container .toast-warning {
+  background-color: rgba(20, 18, 12, 0.92) !important;
+  border-color: rgba(251, 191, 36, 0.25) !important;
+  color: #fffbeb !important;
+}
+.toast-container .toast-warning .toast-progress { background: #fbbf24 !important; }
+
+/* Info toast — Luxelle rose-gold */
+.toast-container .toast-info {
+  background-color: rgba(18, 14, 16, 0.92) !important;
+  border-color: rgba(232, 180, 188, 0.3) !important;
+  color: var(--text-secondary) !important;
+}
+.toast-container .toast-info .toast-progress { background: var(--accent-primary) !important; }
+
+/* Light mode toasts */
+html.light .toast-container .toast-success  { background-color: rgba(240, 253, 244, 0.97) !important; color: #14532d !important; }
+html.light .toast-container .toast-error    { background-color: rgba(255, 241, 242, 0.97) !important; color: #881337 !important; }
+html.light .toast-container .toast-warning  { background-color: rgba(255, 251, 235, 0.97) !important; color: #713f12 !important; }
+html.light .toast-container .toast-info     { background-color: rgba(255, 252, 253, 0.97) !important; color: #4a4540 !important; }
+
+/* ─── Select dropdown scrollbar ─────────────────────────────── */
+.luxelle-scrollbar::-webkit-scrollbar { width: 4px; }
+.luxelle-scrollbar::-webkit-scrollbar-track { background: transparent; }
+.luxelle-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--border-medium);
+  border-radius: 999px;
+}
+
 /* ─── Reduced Motion ─────────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {

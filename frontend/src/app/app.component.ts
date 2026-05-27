@@ -8,6 +8,8 @@ import { ServicesComponent } from './features/services/services.component';
 import { PricingComponent } from './features/pricing/pricing.component';
 import { GalleryComponent } from './features/gallery/gallery.component';
 import { BookingComponent } from './features/booking/booking.component';
+import { PageLoaderComponent } from './shared/components/ui/page-loader/page-loader.component';
+import { ConfirmationModalComponent } from './shared/components/ui/modal/confirmation-modal.component';
 
 @Component({
   selector: 'app-root',
@@ -22,8 +24,12 @@ import { BookingComponent } from './features/booking/booking.component';
     PricingComponent,
     GalleryComponent,
     BookingComponent,
+    PageLoaderComponent,
+    ConfirmationModalComponent,
   ],
   template: `
+    <app-page-loader></app-page-loader>
+    <app-confirmation-modal></app-confirmation-modal>
     <div class="min-h-screen bg-luxelle text-luxelle">
       <app-navbar></app-navbar>
       <main>
