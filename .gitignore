@@ -10,3 +10,10 @@ yarn-error.log*
 .env
 .env.local
 .env.*.local
+
+# .NET
+backend/src/*/bin/
+backend/src/*/obj/
+backend/*.db
+*.user
+.vs/

@@ -1,0 +1,83 @@
+<section id="pricing" class="section-padding relative overflow-hidden">
+  <div class="absolute inset-0 bg-luxelle-card/20 -z-10"></div>
+  <div class="orb orb-rose absolute w-96 h-96 top-0 left-0 opacity-20 -z-10"></div>
+  <div class="orb orb-gold absolute w-80 h-80 bottom-0 right-0 opacity-15 -z-10"></div>
+
+  <div class="section-container">
+
+    <!-- Header -->
+    <div class="section-header" appScrollReveal>
+      <span class="section-eyebrow">Transparent Pricing</span>
+      <h2 class="mb-4">Flexible <span class="text-gradient">Pricing Plans</span></h2>
+      <div class="accent-divider"></div>
+      <p class="text-luxelle-tertiary mt-5 max-w-lg mx-auto text-base leading-relaxed">
+        Choose the perfect plan for your beauty and wellness journey. No hidden fees, ever.
+      </p>
+    </div>
+
+    <!-- Cards grid — items-stretch so all cards share the same height -->
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 items-stretch">
+      <div
+        *ngFor="let tier of pricingTiers; let i = index"
+        appScrollReveal [animationType]="'fadeInUp'"
+        [style.animation-delay]="(i * 100) + 'ms'"
+        class="relative flex flex-col rounded-2xl p-6 h-full transition-all duration-300"
+        [ngClass]="tier.isPopular
+          ? 'luxelle-card luxelle-card-featured ring-1 ring-rose-gold/30 shadow-luxelle-card-hover z-10'
+          : 'luxelle-card hover:shadow-luxelle-card'"
+      >
+        <!-- Popular badge -->
+        <div *ngIf="tier.isPopular" class="absolute -top-3.5 left-0 right-0 flex justify-center">
+          <span class="badge-popular">
+            <lucide-icon name="star" class="w-2.5 h-2.5"></lucide-icon>
+            Most Popular
+          </span>
+        </div>
+
+        <!-- Name & description -->
+        <div class="mb-5" [class.mt-2]="tier.isPopular">
+          <h3 class="text-lg font-bold text-luxelle mb-1">{{ tier.name }}</h3>
+          <p class="text-luxelle-tertiary text-xs leading-relaxed">{{ tier.description }}</p>
+        </div>
+
+        <!-- Price -->
+        <div class="mb-6 pb-6 border-b border-luxelle-subtle">
+          <div class="flex items-end gap-1">
+            <span class="text-4xl font-extrabold tracking-tight"
+                  [ngClass]="tier.isPopular ? 'text-gradient' : 'text-luxelle'">
+              ${{ tier.price }}
+            </span>
+            <span class="text-luxelle-tertiary text-sm pb-1">/month</span>
+          </div>
+        </div>
+
+        <!-- Features — flex-1 so they fill remaining space equally -->
+        <ul class="space-y-3 flex-1 mb-6">
+          <li *ngFor="let feature of tier.features" class="flex items-start gap-2.5 text-sm">
+            <div class="w-4 h-4 rounded-full flex-shrink-0 mt-0.5 flex items-center justify-center"
+                 [ngClass]="tier.isPopular ? 'bg-rose-gold/20' : 'bg-warm-gold/15'">
+              <lucide-icon name="check" class="w-2.5 h-2.5"
+                           [ngClass]="tier.isPopular ? 'text-rose-gold' : 'text-warm-gold'"></lucide-icon>
+            </div>
+            <span class="text-luxelle-secondary leading-snug">{{ feature }}</span>
+          </li>
+        </ul>
+
+        <!-- CTA pinned to bottom -->
+        <app-button
+          [variant]="tier.isPopular ? 'primary' : 'outline'"
+          size="md"
+          class="w-full mt-auto"
+          (onClick)="scrollToBooking()"
+        >
+          Get Started
+        </app-button>
+      </div>
+    </div>
+
+    <!-- Footer note -->
+    <p class="text-center text-luxelle-tertiary text-sm mt-10 animate-fade-in delay-500">
+      All plans include a free initial consultation. Cancel anytime.
+    </p>
+  </div>
+</section>

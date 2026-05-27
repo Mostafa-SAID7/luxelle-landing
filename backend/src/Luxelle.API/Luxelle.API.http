@@ -1,0 +1,6 @@
+@Luxelle.API_HostAddress = http://localhost:5069
+
+GET {{Luxelle.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
