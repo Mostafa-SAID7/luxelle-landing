@@ -69,10 +69,16 @@ export class StripeService {
   }
 
   async createPaymentIntent(request: CreatePaymentIntentRequest): Promise<PaymentResponse> {
-    return this.http.post<PaymentResponse>(
-      `${environment.apiUrl}/payments/create-payment-intent`,
-      request
-    ).toPromise() as Promise<PaymentResponse>;
+    try {
+      const response = await this.http.post<PaymentResponse>(
+        `${environment.apiUrl}/payments/create-payment-intent`,
+        request
+      ).toPromise();
+      return response!;
+    } catch (error: any) {
+      console.error('Payment intent creation error:', error);
+      throw new Error(error?.error?.error || error?.message || 'Failed to create payment intent');
+    }
   }
 
   async confirmPayment(clientSecret: string): Promise<any> {
@@ -95,9 +101,15 @@ export class StripeService {
   }
 
   async confirmPaymentStatus(paymentIntentId: string): Promise<{ success: boolean; paymentIntentId: string }> {
-    return this.http.get<{ success: boolean; paymentIntentId: string }>(
-      `${environment.apiUrl}/payments/confirm-payment/${paymentIntentId}`
-    ).toPromise() as Promise<{ success: boolean; paymentIntentId: string }>;
+    try {
+      const response = await this.http.get<{ success: boolean; paymentIntentId: string }>(
+        `${environment.apiUrl}/payments/confirm-payment/${paymentIntentId}`
+      ).toPromise();
+      return response!;
+    } catch (error: any) {
+      console.error('Payment status confirmation error:', error);
+      throw new Error(error?.error?.error || error?.message || 'Failed to confirm payment status');
+    }
   }
 
   getPublishableKey(): Promise<{ publishableKey: string }> {

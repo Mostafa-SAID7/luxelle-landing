@@ -111,7 +111,9 @@ export class CartDrawerComponent implements OnInit, OnDestroy {
         customerName: bookingData.name
       };
 
+      console.log('Creating payment intent with:', paymentRequest);
       const paymentResponse = await this.stripeService.createPaymentIntent(paymentRequest);
+      console.log('Payment intent created:', paymentResponse);
 
       // Confirm payment with Stripe
       const confirmResult = await this.stripeService.confirmPayment(paymentResponse.clientSecret);
@@ -133,6 +135,7 @@ export class CartDrawerComponent implements OnInit, OnDestroy {
         }
       }
     } catch (err: any) {
+      console.error('Payment error:', err);
       this.paymentError = err.message || 'An error occurred during payment';
       this.isProcessing = false;
     }
