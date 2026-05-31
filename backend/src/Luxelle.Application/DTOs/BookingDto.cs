@@ -1,4 +1,5 @@
 using Luxelle.Domain.Entities;
+using Luxelle.Domain.Entities.Enums;
 
 namespace Luxelle.Application.DTOs;
 

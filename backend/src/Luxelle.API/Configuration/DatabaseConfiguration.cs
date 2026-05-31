@@ -7,29 +7,15 @@ public static class DatabaseConfiguration
 {
     public static IServiceCollection AddDatabaseContext(this IServiceCollection services, IConfiguration configuration)
     {
-        var tursoUrl = configuration["TursoConnection:Url"];
-        var tursoToken = configuration["TursoConnection:AuthToken"];
+        var connectionString = configuration.GetConnectionString("DefaultConnection");
 
-        // Try to get token from environment variable if not in config
-        if (string.IsNullOrEmpty(tursoToken))
+        if (string.IsNullOrEmpty(connectionString))
         {
-            tursoToken = Environment.GetEnvironmentVariable("TursoConnection__AuthToken");
+            throw new InvalidOperationException("Connection string 'DefaultConnection' not found in configuration.");
         }
 
-        if (!string.IsNullOrEmpty(tursoUrl) && !string.IsNullOrEmpty(tursoToken))
-        {
-            // Production: Use Turso
-            var connectionString = $"Data Source={tursoUrl};AuthToken={tursoToken}";
-            services.AddDbContext<AppDbContext>(options =>
-                options.UseSqlite(connectionString));
-        }
-        else
-        {
-            // Development: Use local SQLite
-            services.AddDbContext<AppDbContext>(options =>
-                options.UseSqlite(configuration.GetConnectionString("DefaultConnection")
-                    ?? "Data Source=luxelle.db"));
-        }
+        services.AddDbContext<AppDbContext>(options =>
+            options.UseSqlServer(connectionString));
 
         return services;
     }

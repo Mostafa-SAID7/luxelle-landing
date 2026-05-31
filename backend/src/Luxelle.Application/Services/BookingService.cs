@@ -1,6 +1,7 @@
 using Luxelle.Application.DTOs;
 using Luxelle.Application.Interfaces;
 using Luxelle.Domain.Entities;
+using Luxelle.Domain.Entities.Enums;
 using Luxelle.Domain.Interfaces;
 
 namespace Luxelle.Application.Services;

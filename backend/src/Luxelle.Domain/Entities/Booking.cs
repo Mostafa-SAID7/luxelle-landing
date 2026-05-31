@@ -1,3 +1,5 @@
+using Luxelle.Domain.Entities.Enums;
+
 namespace Luxelle.Domain.Entities;
 
 public class Booking
@@ -11,12 +13,4 @@ public class Booking
     public BookingStatus Status { get; set; } = BookingStatus.Pending;
     public string? Notes { get; set; }
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-}
-
-public enum BookingStatus
-{
-    Pending,
-    Confirmed,
-    Completed,
-    Cancelled
 }
