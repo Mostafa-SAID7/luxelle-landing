@@ -15,7 +15,13 @@ public static class DatabaseConfiguration
         }
 
         services.AddDbContext<AppDbContext>(options =>
-            options.UseSqlServer(connectionString));
+        {
+            options.UseSqlServer(connectionString, sqlOptions =>
+            {
+                sqlOptions.CommandTimeout(30);
+                sqlOptions.EnableRetryOnFailure(maxRetryCount: 3);
+            });
+        });
 
         return services;
     }
@@ -30,8 +36,17 @@ public static class DatabaseConfiguration
                 var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
                 logger.LogInformation("Checking database connection...");
                 
-                // Test connection
-                await db.Database.CanConnectAsync();
+                // Test connection with timeout
+                using (var cts = new System.Threading.CancellationTokenSource(TimeSpan.FromSeconds(10)))
+                {
+                    var canConnect = await db.Database.CanConnectAsync(cts.Token);
+                    if (!canConnect)
+                    {
+                        logger.LogWarning("Cannot connect to database - will retry on next request");
+                        return;
+                    }
+                }
+                
                 logger.LogInformation("Database connection successful");
                 
                 // Create database if it doesn't exist
@@ -48,7 +63,7 @@ public static class DatabaseConfiguration
             }
             catch (Exception ex)
             {
-                logger.LogError(ex, "Error during database initialization - continuing anyway");
+                logger.LogError(ex, "Error during database initialization - app will continue");
                 // Don't throw - allow app to start even if DB init fails
                 // This allows the /health endpoint to work for diagnostics
             }

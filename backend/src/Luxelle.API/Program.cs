@@ -17,8 +17,16 @@ try
     logger.LogInformation("Application starting...");
     logger.LogInformation("Environment: {Environment}", app.Environment.EnvironmentName);
 
-    // Initialize database
-    await app.InitializeDatabaseAsync();
+    try
+    {
+        // Initialize database
+        await app.InitializeDatabaseAsync();
+    }
+    catch (Exception dbEx)
+    {
+        logger.LogError(dbEx, "Database initialization failed - app will continue");
+        // Continue anyway - don't crash the app
+    }
 
     // Configure middleware
     app.UseSwaggerUI();
@@ -34,5 +42,6 @@ try
 catch (Exception ex)
 {
     Console.WriteLine($"Fatal error: {ex}");
-    throw;
+    Console.WriteLine($"Stack trace: {ex.StackTrace}");
+    Environment.Exit(1);
 }
