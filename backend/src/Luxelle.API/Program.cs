@@ -17,9 +17,24 @@ builder.Services.AddCors(options =>
         policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
 });
 
-builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")
-        ?? "Data Source=luxelle.db"));
+// Use Turso (LibSQL) in production, SQLite in development
+var tursoUrl = builder.Configuration["TursoConnection:Url"];
+var tursoToken = builder.Configuration["TursoConnection:AuthToken"];
+
+if (!string.IsNullOrEmpty(tursoUrl) && !string.IsNullOrEmpty(tursoToken))
+{
+    // Production: Use Turso
+    var connectionString = $"Data Source={tursoUrl};AuthToken={tursoToken}";
+    builder.Services.AddDbContext<AppDbContext>(options =>
+        options.UseSqlite(connectionString));
+}
+else
+{
+    // Development: Use local SQLite
+    builder.Services.AddDbContext<AppDbContext>(options =>
+        options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")
+            ?? "Data Source=luxelle.db"));
+}
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IServiceRepository, ServiceRepository>();

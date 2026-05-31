@@ -1,0 +1,19 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "backend/src/Luxelle.API/Luxelle.API.csproj",
+      "use": "@vercel/dotnet"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "backend/src/Luxelle.API/Program.cs"
+    }
+  ],
+  "env": {
+    "TursoConnection__Url": "@turso_url",
+    "TursoConnection__AuthToken": "@turso_token"
+  }
+}
