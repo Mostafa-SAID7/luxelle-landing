@@ -9,13 +9,18 @@ type ButtonSize = 'sm' | 'md' | 'lg';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './button.component.html',
+  host: {
+    '[class.block]': 'fullWidth()',
+    '[class.w-full]': 'fullWidth()',
+  },
 })
 export class ButtonComponent {
-  variant = input<ButtonVariant>('primary');
-  size = input<ButtonSize>('md');
-  disabled = input(false);
-  type = input<'button' | 'submit' | 'reset'>('button');
-  onClick = output<void>();
+  variant   = input<ButtonVariant>('primary');
+  size      = input<ButtonSize>('md');
+  disabled  = input(false);
+  type      = input<'button' | 'submit' | 'reset'>('button');
+  fullWidth = input(false);
+  onClick   = output<void>();
 
   getButtonClasses(): string {
     const base = [
@@ -54,6 +59,8 @@ export class ButtonComponent {
       ].join(' '),
     };
 
-    return `${base} ${sizes[this.size()]} ${variants[this.variant()]}`;
+    const width = this.fullWidth() ? ' w-full' : '';
+
+    return `${base} ${sizes[this.size()]} ${variants[this.variant()]}${width}`;
   }
 }

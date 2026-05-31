@@ -11,8 +11,17 @@ import { LucideAngularModule } from 'lucide-angular';
   templateUrl: './gallery.component.html',
 })
 export class GalleryComponent {
-  galleryImages = GALLERY_IMAGES;
-  selectedImage = signal<(typeof GALLERY_IMAGES)[0] | null>(null);
+  galleryImages  = GALLERY_IMAGES;
+  selectedImage  = signal<(typeof GALLERY_IMAGES)[0] | null>(null);
+  loadedImages   = signal<Set<string>>(new Set());
+
+  isImageLoaded(id: string): boolean {
+    return this.loadedImages().has(id);
+  }
+
+  onImageLoad(id: string): void {
+    this.loadedImages.update(s => new Set([...s, id]));
+  }
 
   isFeatured(index: number): boolean {
     return index === 0 || index === 5 || index === 6 || index === 7;

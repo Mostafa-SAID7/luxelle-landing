@@ -53,7 +53,7 @@ export const SERVICES: Service[] = [
     id: '7',
     name: 'Facial Treatments',
     description: 'Specialized facials targeting specific skin concerns',
-    icon: 'face',
+    icon: 'star',
     price: 140,
     duration: 60,
   },
@@ -135,7 +135,7 @@ export const NAVIGATION_LINKS = [
   { label: 'Services', href: '#services' },
   { label: 'Pricing', href: '#pricing' },
   { label: 'Gallery', href: '#gallery' },
-  { label: 'Contact', href: '#contact' },
+  { label: 'Contact', href: '#booking' },
 ];
 
 export const SOCIAL_LINKS = [

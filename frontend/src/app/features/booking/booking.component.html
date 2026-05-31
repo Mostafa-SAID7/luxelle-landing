@@ -202,9 +202,26 @@
               </app-button>
             </div>
 
+            <!-- Success ref badge -->
+            <div *ngIf="bookingRef()"
+                 class="flex items-center gap-3 p-4 rounded-2xl bg-green-500/10 border border-green-500/25">
+              <div class="w-8 h-8 rounded-xl bg-green-500/15 flex items-center justify-center flex-shrink-0">
+                <lucide-icon name="check-circle-2" class="w-4 h-4 text-green-400"></lucide-icon>
+              </div>
+              <div>
+                <p class="text-green-400 text-sm font-semibold">Booking Confirmed!</p>
+                <p class="text-luxelle-tertiary text-xs mt-0.5">
+                  Reference: <span class="text-warm-gold font-bold tracking-widest">{{ bookingRef() }}</span>
+                </p>
+              </div>
+            </div>
+
             <p class="text-center text-luxelle-tertiary text-xs">
               By booking you agree to our
-              <a href="#" class="text-rose-gold hover:underline">terms &amp; conditions</a>.
+              <span class="text-rose-gold hover:underline cursor-pointer"
+                    onclick="document.querySelector('app-footer')?.dispatchEvent(new CustomEvent('openLegal', {detail:'terms', bubbles:true}))">
+                terms &amp; conditions
+              </span>.
               No spam, ever.
             </p>
 

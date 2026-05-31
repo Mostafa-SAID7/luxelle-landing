@@ -55,6 +55,16 @@ public class BookingsController : ControllerBase
     }
 
     /// <summary>
+    /// Create a booking for a guest customer (no existing user account required)
+    /// </summary>
+    [HttpPost("guest")]
+    public async Task<IActionResult> CreateGuest([FromBody] GuestBookingDto dto)
+    {
+        var created = await _svc.CreateGuestAsync(dto);
+        return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
+    }
+
+    /// <summary>
     /// Update an existing booking
     /// </summary>
     [HttpPut("{id:int}")]

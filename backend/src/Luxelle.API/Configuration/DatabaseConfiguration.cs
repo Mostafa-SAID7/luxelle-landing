@@ -1,4 +1,5 @@
 using Luxelle.Infrastructure.Data;
+using Luxelle.Infrastructure.Data.Seeds;
 using Microsoft.EntityFrameworkCore;
 
 namespace Luxelle.API.Configuration;
@@ -52,14 +53,20 @@ public static class DatabaseConfiguration
                 // Create database if it doesn't exist
                 logger.LogInformation("Ensuring database is created...");
                 await db.Database.EnsureCreatedAsync();
-                
-                // Verify tables exist
-                var users = await db.Users.CountAsync();
+
+                // Runtime seed: ensure full service catalogue + pricing tiers
+                logger.LogInformation("Running runtime data seeder...");
+                await RuntimeDataSeeder.SeedAsync(db);
+
+                // Verify tables
+                var users    = await db.Users.CountAsync();
                 var services = await db.Services.CountAsync();
                 var bookings = await db.Bookings.CountAsync();
-                
-                logger.LogInformation("Database ready - Users: {UserCount}, Services: {ServiceCount}, Bookings: {BookingCount}", 
-                    users, services, bookings);
+                var pricing  = await db.PricingTiers.CountAsync();
+
+                logger.LogInformation(
+                    "Database ready — Users: {U}, Services: {S}, Bookings: {B}, PricingTiers: {P}",
+                    users, services, bookings, pricing);
             }
             catch (Exception ex)
             {

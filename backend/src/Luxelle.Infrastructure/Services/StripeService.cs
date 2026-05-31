@@ -33,8 +33,8 @@ public class StripeService : IStripeService
                     { "BookingId", dto.BookingId.ToString() },
                     { "ServiceId", dto.ServiceId.ToString() }
                 },
-                ReceiptEmail = dto.CustomerEmail,
-                Description = $"Payment for booking {dto.BookingId}"
+                ReceiptEmail = string.IsNullOrWhiteSpace(dto.CustomerEmail) ? null : dto.CustomerEmail,
+                Description = $"Luxelle booking #{dto.BookingId}"
             };
 
             var service = new PaymentIntentService();

@@ -13,13 +13,14 @@ public static class RepositoryConfiguration
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IServiceRepository, ServiceRepository>();
         services.AddScoped<IBookingRepository, BookingRepository>();
+        services.AddScoped<IPricingTierRepository, PricingTierRepository>();
 
-        // Services
+        // Application services
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<IServiceService, ServiceService>();
         services.AddScoped<IBookingService, BookingService>();
+        services.AddScoped<IPricingTierService, PricingTierService>();
 
         return services;
     }
 }
-
