@@ -14,10 +14,35 @@
       </p>
     </div>
 
-    <!-- Grid -->
-    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+    <!-- ── Skeleton grid ── -->
+    <div *ngIf="isLoading()" class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+      <div *ngFor="let s of skeletons" class="luxelle-card flex flex-col animate-pulse">
+        <div class="w-12 h-12 rounded-2xl bg-white/[0.05] mb-5 flex-shrink-0"></div>
+        <div class="h-4 w-3/4 rounded-lg bg-white/[0.05] mb-3"></div>
+        <div class="space-y-2 flex-1">
+          <div class="h-3 rounded bg-white/[0.04] w-full"></div>
+          <div class="h-3 rounded bg-white/[0.04] w-5/6"></div>
+          <div class="h-3 rounded bg-white/[0.04] w-2/3"></div>
+        </div>
+        <div class="mt-5 pt-4 border-t border-white/[0.05] flex justify-between">
+          <div class="h-7 w-16 rounded-lg bg-white/[0.05]"></div>
+          <div class="h-7 w-16 rounded-lg bg-white/[0.05]"></div>
+        </div>
+        <div class="mt-4 h-9 w-full rounded-xl bg-white/[0.05]"></div>
+      </div>
+    </div>
+
+    <!-- ── Error state ── -->
+    <div *ngIf="!isLoading() && hasError()"
+         class="flex flex-col items-center gap-4 py-16 text-center">
+      <lucide-icon name="alert-circle" class="w-10 h-10 text-rose-gold/60"></lucide-icon>
+      <p class="text-luxelle-tertiary text-sm">{{ hasError() }}</p>
+    </div>
+
+    <!-- ── Real grid ── -->
+    <div *ngIf="!isLoading() && !hasError()" class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
       <div
-        *ngFor="let service of services; let i = index"
+        *ngFor="let service of services(); let i = index"
         appScrollReveal [animationType]="'fadeInUp'"
         class="group luxelle-card cursor-pointer flex flex-col"
         [style.animation-delay]="(i * 80) + 'ms'"
@@ -53,7 +78,7 @@
           <div class="text-right">
             <p class="text-[11px] text-luxelle-tertiary uppercase tracking-wider mb-0.5">Duration</p>
             <p class="text-lg font-bold text-warm-gold leading-none">
-              {{ service.duration }}<span class="text-xs font-medium">m</span>
+              {{ service.durationMinutes }}<span class="text-xs font-medium">m</span>
             </p>
           </div>
         </div>
@@ -78,5 +103,6 @@
 
       </div>
     </div>
+
   </div>
 </section>

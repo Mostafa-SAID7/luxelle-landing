@@ -77,26 +77,31 @@ export class StripeService {
           height: window.getComputedStyle(cardElementDiv).height
         });
 
-        // Create the card element with MUCH BETTER styling for visibility
+        // Create card element — use the app's light text colour (#f5f0eb) so it
+        // is always visible against the solid dark container (#1c1c20).
         this.cardElement = this.elements.create('card', {
           style: {
             base: {
-              fontSize: '18px',
-              color: '#ffffff',
+              fontSize: '16px',
+              color: '#f5f0eb',
               fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
+              fontWeight: '500',
+              lineHeight: '24px',
               '::placeholder': {
-                color: '#9ca3af'
+                color: '#7a736c'
               },
-              lineHeight: '1.8',
-              padding: '0',
-              fontWeight: '500'
+              iconColor: '#e8b4bc'
             },
             invalid: {
               color: '#fca5a5',
               iconColor: '#f87171'
+            },
+            complete: {
+              color: '#f5f0eb',
+              iconColor: '#e8b4bc'
             }
           },
-          hidePostalCode: false
+          hidePostalCode: true
         });
 
         // Mount the element
