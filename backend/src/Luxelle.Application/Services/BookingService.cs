@@ -9,8 +9,13 @@ namespace Luxelle.Application.Services;
 public class BookingService : IBookingService
 {
     private readonly IBookingRepository _repo;
+    private readonly IUserRepository _userRepo;
 
-    public BookingService(IBookingRepository repo) => _repo = repo;
+    public BookingService(IBookingRepository repo, IUserRepository userRepo)
+    {
+        _repo = repo;
+        _userRepo = userRepo;
+    }
 
     public async Task<IEnumerable<BookingDto>> GetAllAsync() =>
         (await _repo.GetAllAsync()).Select(MapToDto);
@@ -32,6 +37,33 @@ public class BookingService : IBookingService
         var booking = new Booking
         {
             UserId = dto.UserId,
+            ServiceId = dto.ServiceId,
+            AppointmentDate = dto.AppointmentDate,
+            Notes = dto.Notes,
+            Status = BookingStatus.Pending
+        };
+        var created = await _repo.AddAsync(booking);
+        var full = await _repo.GetByIdAsync(created.Id);
+        return MapToDto(full!);
+    }
+
+    public async Task<BookingDto> CreateGuestAsync(GuestBookingDto dto)
+    {
+        var user = await _userRepo.GetByEmailAsync(dto.Email);
+        if (user is null)
+        {
+            user = await _userRepo.AddAsync(new User
+            {
+                FullName = dto.FullName,
+                Email = dto.Email,
+                Phone = dto.Phone,
+                PasswordHash = string.Empty
+            });
+        }
+
+        var booking = new Booking
+        {
+            UserId = user.Id,
             ServiceId = dto.ServiceId,
             AppointmentDate = dto.AppointmentDate,
             Notes = dto.Notes,

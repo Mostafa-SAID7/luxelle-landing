@@ -1,12 +1,14 @@
 import { Component, inject, OnInit, OnDestroy, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
 import { LucideAngularModule } from 'lucide-angular';
 import { CartService } from '../../core/services/cart.service';
 import { StripeService } from '../../core/services/stripe.service';
 import { DatePickerComponent } from '../../shared/components/ui/date-picker/date-picker.component';
 import { SelectComponent, SelectOption } from '../../shared/components/ui/select/select.component';
 import { ButtonComponent } from '../../shared/components/ui/button/button.component';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-cart-drawer',
@@ -25,6 +27,7 @@ export class CartDrawerComponent implements OnInit, OnDestroy {
   cart = inject(CartService);
   private fb = inject(FormBuilder);
   private stripeService = inject(StripeService);
+  private http = inject(HttpClient);
 
   isProcessing = false;
   paymentError: string | null = null;
@@ -85,7 +88,7 @@ export class CartDrawerComponent implements OnInit, OnDestroy {
   getErrorMessage(ctrl: string): string {
     const c = this.form.get(ctrl);
     if (!c || !c.errors) return '';
-    
+
     if (ctrl === 'name') {
       if (c.errors['required']) return 'Full name is required';
       if (c.errors['minlength']) return 'Name must be at least 2 characters';
@@ -113,11 +116,24 @@ export class CartDrawerComponent implements OnInit, OnDestroy {
     }).format(new Date(d));
   }
 
+  private buildAppointmentDate(date: Date, timeSlot: string): string {
+    const d = new Date(date);
+    const match = timeSlot.match(/^(\d+):(\d+)\s*(AM|PM)$/i);
+    if (match) {
+      let hours = parseInt(match[1], 10);
+      const minutes = parseInt(match[2], 10);
+      const meridiem = match[3].toUpperCase();
+      if (meridiem === 'PM' && hours !== 12) hours += 12;
+      if (meridiem === 'AM' && hours === 12) hours = 0;
+      d.setHours(hours, minutes, 0, 0);
+    }
+    return d.toISOString();
+  }
+
   async proceed(): Promise<void> {
     this.form.markAllAsTouched();
     if (this.form.invalid) return;
 
-    // Ensure card element is initialized before proceeding
     if (!this.cardElementInitialized) {
       try {
         await this.initializeCardElement();
@@ -142,22 +158,47 @@ export class CartDrawerComponent implements OnInit, OnDestroy {
         notes: v.notes ?? '',
       };
 
-      // Create payment intent
+      const firstItem = this.cart.items()[0];
+      const serviceId = firstItem?.serviceId ? parseInt(firstItem.serviceId, 10) : 1;
+
+      const appointmentDate = bookingData.date
+        ? this.buildAppointmentDate(bookingData.date, bookingData.time)
+        : new Date().toISOString();
+
+      const guestBookingRequest = {
+        fullName: bookingData.name,
+        email: bookingData.email,
+        phone: bookingData.phone,
+        serviceId,
+        appointmentDate,
+        notes: bookingData.notes || null,
+      };
+
+      console.log('Creating guest booking:', guestBookingRequest);
+      let bookingId = 0;
+      try {
+        const bookingResponse = await this.http
+          .post<{ id: number }>(`${environment.apiUrl}/bookings/guest`, guestBookingRequest)
+          .toPromise();
+        bookingId = bookingResponse?.id ?? 0;
+        console.log('Guest booking created, id:', bookingId);
+      } catch (bookingErr) {
+        console.warn('Could not create booking record, continuing with payment:', bookingErr);
+      }
+
       const paymentRequest = {
-        bookingId: 0,
-        serviceId: this.cart.items()[0]?.serviceId ? parseInt(this.cart.items()[0].serviceId) : 1,
+        bookingId,
+        serviceId,
         amount: this.cart.subtotal(),
         currency: 'usd',
         customerEmail: bookingData.email,
-        customerName: bookingData.name
+        customerName: bookingData.name,
       };
 
-      console.log('Creating payment intent with:', paymentRequest);
+      console.log('Creating payment intent:', paymentRequest);
       const paymentResponse = await this.stripeService.createPaymentIntent(paymentRequest);
       console.log('Payment intent created:', paymentResponse);
 
-      // Confirm payment with Stripe
-      console.log('Confirming payment with client secret:', paymentResponse.clientSecret);
       const confirmResult = await this.stripeService.confirmPayment(paymentResponse.clientSecret);
       console.log('Payment confirmation result:', confirmResult);
 
@@ -167,7 +208,6 @@ export class CartDrawerComponent implements OnInit, OnDestroy {
         return;
       }
 
-      // Verify payment status
       if (paymentResponse.paymentIntentId) {
         const statusResult = await this.stripeService.confirmPaymentStatus(paymentResponse.paymentIntentId);
         if (statusResult.success) {
