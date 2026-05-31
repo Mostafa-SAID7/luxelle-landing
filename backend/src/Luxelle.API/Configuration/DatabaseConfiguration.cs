@@ -48,8 +48,9 @@ public static class DatabaseConfiguration
             }
             catch (Exception ex)
             {
-                logger.LogError(ex, "Error during database initialization");
-                throw;
+                logger.LogError(ex, "Error during database initialization - continuing anyway");
+                // Don't throw - allow app to start even if DB init fails
+                // This allows the /health endpoint to work for diagnostics
             }
         }
     }
