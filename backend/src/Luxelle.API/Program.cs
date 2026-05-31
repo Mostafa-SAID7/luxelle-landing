@@ -9,6 +9,7 @@ try
     builder.Services.AddCorsPolicy();
     builder.Services.AddDatabaseContext(builder.Configuration);
     builder.Services.AddRepositoriesAndServices();
+    builder.Services.AddStripeServices(builder.Configuration);
 
     var app = builder.Build();
 
