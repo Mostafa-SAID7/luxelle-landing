@@ -28,9 +28,23 @@ public static class DatabaseConfiguration
             try
             {
                 var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+                logger.LogInformation("Checking database connection...");
+                
+                // Test connection
+                await db.Database.CanConnectAsync();
+                logger.LogInformation("Database connection successful");
+                
+                // Create database if it doesn't exist
                 logger.LogInformation("Ensuring database is created...");
                 await db.Database.EnsureCreatedAsync();
-                logger.LogInformation("Database ready");
+                
+                // Verify tables exist
+                var users = await db.Users.CountAsync();
+                var services = await db.Services.CountAsync();
+                var bookings = await db.Bookings.CountAsync();
+                
+                logger.LogInformation("Database ready - Users: {UserCount}, Services: {ServiceCount}, Bookings: {BookingCount}", 
+                    users, services, bookings);
             }
             catch (Exception ex)
             {

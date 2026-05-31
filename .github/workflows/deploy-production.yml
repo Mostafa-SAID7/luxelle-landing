@@ -1,4 +1,4 @@
-name: Deploy to Production (Netlify & Vercel)
+name: Deploy to Production (Netlify & MonsterASP)
 
 on:
   push:
@@ -42,20 +42,36 @@ jobs:
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
 
   deploy-backend:
-    name: Deploy Backend to Vercel
+    name: Deploy Backend to MonsterASP
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Deploy to Vercel
-        uses: amondnet/vercel-action@v25
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
         with:
-          vercel-token: ${{ secrets.VERCEL_TOKEN }}
-          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
-          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
-          working-directory: backend
-          production: true
-        env:
-          TursoConnection__Url: ${{ secrets.TURSO_URL }}
-          TursoConnection__AuthToken: ${{ secrets.TURSO_TOKEN }}
+          dotnet-version: '8.0.x'
+
+      - name: Restore dependencies
+        run: dotnet restore
+        working-directory: backend
+
+      - name: Build
+        run: dotnet build --configuration Release --no-restore
+        working-directory: backend
+
+      - name: Publish
+        run: dotnet publish -c Release -o ./publish
+        working-directory: backend/src/Luxelle.API
+
+      - name: Deploy to MonsterASP via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.MONSTERASP_FTP_SERVER }}
+          username: ${{ secrets.MONSTERASP_FTP_USERNAME }}
+          password: ${{ secrets.MONSTERASP_FTP_PASSWORD }}
+          local-dir: ./backend/src/Luxelle.API/publish/
+          server-dir: ./
+          state-name: .ftp-deploy-sync-state.json
+
