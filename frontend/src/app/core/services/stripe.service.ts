@@ -77,21 +77,23 @@ export class StripeService {
           height: window.getComputedStyle(cardElementDiv).height
         });
 
-        // Create the card element with improved styling
+        // Create the card element with MUCH BETTER styling for visibility
         this.cardElement = this.elements.create('card', {
           style: {
             base: {
-              fontSize: '16px',
-              color: '#e5e7eb',
+              fontSize: '18px',
+              color: '#ffffff',
               fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
               '::placeholder': {
                 color: '#9ca3af'
               },
-              lineHeight: '1.5',
-              padding: '0'
+              lineHeight: '1.8',
+              padding: '0',
+              fontWeight: '500'
             },
             invalid: {
-              color: '#f87171'
+              color: '#fca5a5',
+              iconColor: '#f87171'
             }
           },
           hidePostalCode: false

@@ -359,15 +359,19 @@
             <div class="relative">
               <div 
                 id="card-element" 
-                class="p-4 rounded-xl bg-white/[0.04] border border-white/[0.08] text-luxelle min-h-[56px] flex items-center transition-all duration-200 focus-within:bg-white/[0.06] focus-within:border-rose-gold/50"
+                class="p-5 rounded-xl bg-white/[0.08] border-2 border-white/[0.15] text-white min-h-[64px] flex items-center transition-all duration-200 focus-within:bg-white/[0.12] focus-within:border-rose-gold/60 hover:bg-white/[0.1]"
               ></div>
-              <div id="card-errors" class="text-red-400 text-[11px] mt-2 flex items-center gap-1">
-                <span id="card-error-icon" class="hidden">
-                  <lucide-icon name="alert-circle" class="w-3 h-3 flex-shrink-0"></lucide-icon>
+              <div id="card-errors" class="text-red-300 text-[12px] mt-2.5 flex items-center gap-1.5 min-h-[20px]">
+                <span id="card-error-icon" class="hidden flex-shrink-0">
+                  <lucide-icon name="alert-circle" class="w-3.5 h-3.5"></lucide-icon>
                 </span>
-                <span id="card-error-text"></span>
+                <span id="card-error-text" class="leading-tight"></span>
               </div>
             </div>
+            <p class="text-[10px] text-luxelle-tertiary/70 flex items-center gap-1">
+              <lucide-icon name="lock" class="w-3 h-3"></lucide-icon>
+              Your payment information is secure and encrypted
+            </p>
           </div>
 
         </form>
