@@ -1,0 +1,25 @@
+using Luxelle.Application.Interfaces;
+using Luxelle.Application.Services;
+using Luxelle.Domain.Interfaces;
+using Luxelle.Infrastructure.Repositories;
+
+namespace Luxelle.API.Configuration;
+
+public static class RepositoryConfiguration
+{
+    public static IServiceCollection AddRepositoriesAndServices(this IServiceCollection services)
+    {
+        // Repositories
+        services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IServiceRepository, ServiceRepository>();
+        services.AddScoped<IBookingRepository, BookingRepository>();
+
+        // Services
+        services.AddScoped<IUserService, UserService>();
+        services.AddScoped<IServiceService, ServiceService>();
+        services.AddScoped<IBookingService, BookingService>();
+
+        return services;
+    }
+}
+
