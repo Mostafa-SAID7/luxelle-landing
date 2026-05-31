@@ -47,6 +47,12 @@ builder.Services.AddCors(options =>
 var tursoUrl = builder.Configuration["TursoConnection:Url"];
 var tursoToken = builder.Configuration["TursoConnection:AuthToken"];
 
+// Try to get token from environment variable if not in config
+if (string.IsNullOrEmpty(tursoToken))
+{
+    tursoToken = Environment.GetEnvironmentVariable("TursoConnection__AuthToken");
+}
+
 if (!string.IsNullOrEmpty(tursoUrl) && !string.IsNullOrEmpty(tursoToken))
 {
     // Production: Use Turso
@@ -72,10 +78,25 @@ builder.Services.AddScoped<IBookingService, BookingService>();
 
 var app = builder.Build();
 
+// Log startup information
+var logger = app.Services.GetRequiredService<ILogger<Program>>();
+logger.LogInformation("Application starting...");
+logger.LogInformation("Environment: {Environment}", app.Environment.EnvironmentName);
+
 using (var scope = app.Services.CreateScope())
 {
-    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    db.Database.EnsureCreated();
+    try
+    {
+        var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+        logger.LogInformation("Ensuring database is created...");
+        db.Database.EnsureCreated();
+        logger.LogInformation("Database ready");
+    }
+    catch (Exception ex)
+    {
+        logger.LogError(ex, "Error during database initialization");
+        throw;
+    }
 }
 
 // Enable Swagger in all environments for API documentation
