@@ -30,47 +30,61 @@ public class ServiceService : IServiceService
     {
         var service = new Service
         {
-            Name = dto.Name,
-            Description = dto.Description,
-            Category = dto.Category,
-            Price = dto.Price,
+            Name            = dto.Name,
+            Description     = dto.Description,
+            Category        = dto.Category,
+            Price           = dto.Price,
             DurationMinutes = dto.DurationMinutes,
-            IsAvailable = true
+            IsAvailable     = true,
         };
-        var created = await _repo.AddAsync(service);
-        return MapToDto(created);
+        return MapToDto(await _repo.AddAsync(service));
     }
 
     public async Task<ServiceDto?> UpdateAsync(int id, UpdateServiceDto dto)
     {
         var service = await _repo.GetByIdAsync(id);
         if (service is null) return null;
-        service.Name = dto.Name;
-        service.Description = dto.Description;
-        service.Category = dto.Category;
-        service.Price = dto.Price;
+        service.Name            = dto.Name;
+        service.Description     = dto.Description;
+        service.Category        = dto.Category;
+        service.Price           = dto.Price;
         service.DurationMinutes = dto.DurationMinutes;
-        service.IsAvailable = dto.IsAvailable;
-        var updated = await _repo.UpdateAsync(service);
-        return MapToDto(updated);
+        service.IsAvailable     = dto.IsAvailable;
+        return MapToDto(await _repo.UpdateAsync(service));
     }
 
     public async Task<bool> DeleteAsync(int id)
     {
-        var service = await _repo.GetByIdAsync(id);
-        if (service is null) return false;
+        if (await _repo.GetByIdAsync(id) is null) return false;
         await _repo.DeleteAsync(id);
         return true;
     }
 
+    // ── Mapping ───────────────────────────────────────────────────────────────
+
     private static ServiceDto MapToDto(Service s) => new()
     {
-        Id = s.Id,
-        Name = s.Name,
-        Description = s.Description,
-        Category = s.Category,
-        Price = s.Price,
+        Id              = s.Id,
+        Name            = s.Name,
+        Description     = s.Description,
+        Category        = s.Category,
+        Icon            = IconForCategory(s.Category),
+        Price           = s.Price,
         DurationMinutes = s.DurationMinutes,
-        IsAvailable = s.IsAvailable
+        IsAvailable     = s.IsAvailable,
+    };
+
+    private static string IconForCategory(string category) => category switch
+    {
+        "Skincare" => "sparkles",
+        "Hair"     => "scissors",
+        "Makeup"   => "palette",
+        "Spa"      => "droplet",
+        "Massage"  => "droplet",
+        "Lashes"   => "eye",
+        "Nails"    => "hand",
+        "Facial"   => "star",
+        "Wellness" => "heart",
+        _          => "sparkles",
     };
 }

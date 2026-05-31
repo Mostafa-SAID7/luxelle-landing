@@ -1,25 +1,23 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ScrollRevealDirective } from '../../shared/directives/scroll-reveal.directive';
-import { CardComponent } from '../../shared/components/ui/card/card.component';
 import { ButtonComponent } from '../../shared/components/ui/button/button.component';
-import { PRICING_TIERS } from '../../core/constants/app.constants';
+import { ApiDataService } from '../../core/services/api-data.service';
 import { LucideAngularModule } from 'lucide-angular';
 
 @Component({
   selector: 'app-pricing',
   standalone: true,
-  imports: [CommonModule, ScrollRevealDirective, CardComponent, ButtonComponent, LucideAngularModule],
+  imports: [CommonModule, ScrollRevealDirective, ButtonComponent, LucideAngularModule],
   templateUrl: './pricing.component.html',
 })
 export class PricingComponent {
-  pricingTiers = PRICING_TIERS;
-  isLoading    = signal(true);
-  skeletons    = Array(4).fill(0);
+  private apiData = inject(ApiDataService);
 
-  constructor() {
-    setTimeout(() => this.isLoading.set(false), 600);
-  }
+  pricingTiers = this.apiData.pricingTiers;
+  isLoading    = this.apiData.pricingLoading;
+  hasError     = this.apiData.pricingError;
+  skeletons    = Array(4).fill(0);
 
   scrollToBooking(): void {
     document.getElementById('booking')?.scrollIntoView({ behavior: 'smooth' });

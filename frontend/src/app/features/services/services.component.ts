@@ -1,8 +1,8 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ScrollRevealDirective } from '../../shared/directives/scroll-reveal.directive';
-import { SERVICES } from '../../core/constants/app.constants';
 import { CartService } from '../../core/services/cart.service';
+import { ApiDataService, ApiService } from '../../core/services/api-data.service';
 import { LucideAngularModule } from 'lucide-angular';
 
 @Component({
@@ -12,27 +12,26 @@ import { LucideAngularModule } from 'lucide-angular';
   templateUrl: './services.component.html',
 })
 export class ServicesComponent {
-  services    = SERVICES;
-  cartService = inject(CartService);
-  addedIds    = signal<string[]>([]);
-  isLoading   = signal(true);
+  private cartService  = inject(CartService);
+  private apiData      = inject(ApiDataService);
+
+  services    = this.apiData.services;
+  isLoading   = this.apiData.servicesLoading;
+  hasError    = this.apiData.servicesError;
   skeletons   = Array(8).fill(0);
+  addedIds    = signal<number[]>([]);
 
-  constructor() {
-    setTimeout(() => this.isLoading.set(false), 700);
-  }
-
-  isAdded(id: string): boolean {
+  isAdded(id: number): boolean {
     return this.addedIds().includes(id);
   }
 
-  addToCart(service: typeof SERVICES[0]): void {
+  addToCart(service: ApiService): void {
     this.cartService.addItem({
-      id:       service.id,
-      name:     service.name,
-      icon:     service.icon,
-      price:    service.price    ?? 0,
-      duration: service.duration ?? 0,
+      id:        String(service.id),
+      name:      service.name,
+      icon:      service.icon,
+      price:     service.price,
+      duration:  service.durationMinutes,
     });
     this.addedIds.update(ids => [...ids, service.id]);
     setTimeout(() => {

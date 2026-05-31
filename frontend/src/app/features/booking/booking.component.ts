@@ -9,7 +9,7 @@ import { DatePickerComponent } from '../../shared/components/ui/date-picker/date
 import { SelectComponent, SelectOption } from '../../shared/components/ui/select/select.component';
 import { NotificationService } from '../../core/services/notification.service';
 import { ConfirmationModalService } from '../../shared/services/confirmation-modal.service';
-import { SERVICES } from '../../core/constants/app.constants';
+import { ApiDataService } from '../../core/services/api-data.service';
 import { environment } from '../../../environments/environment';
 import { LucideAngularModule } from 'lucide-angular';
 
@@ -29,17 +29,21 @@ import { LucideAngularModule } from 'lucide-angular';
   templateUrl: './booking.component.html',
 })
 export class BookingComponent implements OnInit {
-  private fb             = inject(FormBuilder);
-  private http           = inject(HttpClient);
-  private notify         = inject(NotificationService);
-  private confirmModal   = inject(ConfirmationModalService);
+  private fb           = inject(FormBuilder);
+  private http         = inject(HttpClient);
+  private notify       = inject(NotificationService);
+  private confirmModal = inject(ConfirmationModalService);
+  private apiData      = inject(ApiDataService);
 
   bookingForm!: FormGroup;
-  isSubmitting  = signal(false);
-  bookingRef    = signal<string | null>(null);
+  isSubmitting = signal(false);
+  bookingRef   = signal<string | null>(null);
 
   serviceOptions = computed<SelectOption[]>(() =>
-    SERVICES.map(s => ({ value: s.id, label: `${s.name} — $${s.price}` }))
+    this.apiData.services().map(s => ({
+      value: String(s.id),
+      label: `${s.name} — $${s.price}`,
+    }))
   );
 
   timeOptions: SelectOption[] = [
@@ -95,7 +99,6 @@ export class BookingComponent implements OnInit {
       cancelText:  'Review',
       variant:     'info',
     });
-
     if (!confirmed) return;
 
     this.isSubmitting.set(true);
@@ -120,7 +123,7 @@ export class BookingComponent implements OnInit {
       this.notify.success(`Appointment confirmed! Ref: ${ref} ✨`);
       this.bookingForm.reset();
     } catch (err: any) {
-      console.error('Booking API error:', err);
+      console.error('Booking error:', err);
       this.notify.error(err?.error?.message || 'Could not save booking. Please try again.');
     } finally {
       this.isSubmitting.set(false);
