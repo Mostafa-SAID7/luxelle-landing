@@ -1,10 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ScrollRevealDirective } from '../../shared/directives/scroll-reveal.directive';
 import { CardComponent } from '../../shared/components/ui/card/card.component';
 import { ButtonComponent } from '../../shared/components/ui/button/button.component';
 import { PRICING_TIERS } from '../../core/constants/app.constants';
-import { LucideAngularModule, Check } from 'lucide-angular';
+import { LucideAngularModule } from 'lucide-angular';
 
 @Component({
   selector: 'app-pricing',
@@ -14,11 +14,14 @@ import { LucideAngularModule, Check } from 'lucide-angular';
 })
 export class PricingComponent {
   pricingTiers = PRICING_TIERS;
+  isLoading    = signal(true);
+  skeletons    = Array(4).fill(0);
+
+  constructor() {
+    setTimeout(() => this.isLoading.set(false), 600);
+  }
 
   scrollToBooking(): void {
-    const bookingSection = document.getElementById('booking');
-    if (bookingSection) {
-      bookingSection.scrollIntoView({ behavior: 'smooth' });
-    }
+    document.getElementById('booking')?.scrollIntoView({ behavior: 'smooth' });
   }
 }
