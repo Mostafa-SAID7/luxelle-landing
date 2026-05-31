@@ -139,13 +139,16 @@ export class StripeService {
 
       // Listen for change events to show errors
       this.cardElement!.on('change', (event: any) => {
-        const displayError = document.getElementById('card-errors');
-        if (displayError) {
+        const displayError = document.getElementById('card-error-text');
+        const errorIcon = document.getElementById('card-error-icon');
+        if (displayError && errorIcon) {
           if (event.error) {
             displayError.textContent = event.error.message;
+            errorIcon.classList.remove('hidden');
             console.error('Card element error:', event.error.message);
           } else {
             displayError.textContent = '';
+            errorIcon.classList.add('hidden');
           }
         }
       });

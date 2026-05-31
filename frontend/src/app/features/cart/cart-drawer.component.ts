@@ -83,6 +83,30 @@ export class CartDrawerComponent implements OnInit, OnDestroy {
     return !!(c?.invalid && c?.touched);
   }
 
+  getErrorMessage(ctrl: string): string {
+    const c = this.form.get(ctrl);
+    if (!c || !c.errors) return '';
+    
+    if (ctrl === 'name') {
+      if (c.errors['required']) return 'Full name is required';
+      if (c.errors['minlength']) return 'Name must be at least 2 characters';
+    }
+    if (ctrl === 'email') {
+      if (c.errors['required']) return 'Email is required';
+      if (c.errors['email']) return 'Please enter a valid email address';
+    }
+    if (ctrl === 'phone') {
+      if (c.errors['required']) return 'Phone number is required';
+    }
+    if (ctrl === 'date') {
+      if (c.errors['required']) return 'Please select a date';
+    }
+    if (ctrl === 'time') {
+      if (c.errors['required']) return 'Please select a time';
+    }
+    return 'This field is invalid';
+  }
+
   formatDate(d: Date | null | undefined): string {
     if (!d) return '—';
     return new Intl.DateTimeFormat('en-US', {
