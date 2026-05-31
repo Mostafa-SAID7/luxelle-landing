@@ -37,34 +37,42 @@ export class StripeService {
   }
 
   async initializeCardElement(): Promise<void> {
-    if (!this.stripe) {
-      await this.initializeStripe();
-    }
-
-    if (!this.elements) {
-      this.elements = this.stripe!.elements();
-    }
-
-    if (!this.cardElement) {
-      this.cardElement = this.elements.create('card', {
-        style: {
-          base: {
-            fontSize: '14px',
-            color: '#e5e7eb',
-            '::placeholder': {
-              color: '#9ca3af'
-            }
-          },
-          invalid: {
-            color: '#f87171'
-          }
-        }
-      });
-
-      const cardElementDiv = document.getElementById('card-element');
-      if (cardElementDiv) {
-        this.cardElement.mount(cardElementDiv);
+    try {
+      if (!this.stripe) {
+        await this.initializeStripe();
       }
+
+      if (!this.elements) {
+        this.elements = this.stripe!.elements();
+      }
+
+      if (!this.cardElement) {
+        this.cardElement = this.elements.create('card', {
+          style: {
+            base: {
+              fontSize: '14px',
+              color: '#e5e7eb',
+              '::placeholder': {
+                color: '#9ca3af'
+              }
+            },
+            invalid: {
+              color: '#f87171'
+            }
+          }
+        });
+
+        const cardElementDiv = document.getElementById('card-element');
+        if (!cardElementDiv) {
+          throw new Error('Card element container not found in DOM');
+        }
+        
+        this.cardElement.mount(cardElementDiv);
+        console.log('Card element initialized successfully');
+      }
+    } catch (error) {
+      console.error('Failed to initialize card element:', error);
+      throw error;
     }
   }
 

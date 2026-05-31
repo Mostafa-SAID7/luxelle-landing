@@ -52,7 +52,13 @@ export class CartDrawerComponent implements OnInit, OnDestroy {
     // Use effect to watch for step changes
     effect(() => {
       if (this.cart.step() === 2 && !this.cardElementInitialized) {
-        setTimeout(() => this.initializeCardElement(), 100);
+        // Wait for DOM to be fully rendered before initializing card element
+        setTimeout(() => {
+          this.initializeCardElement().catch(err => {
+            console.error('Card element initialization failed:', err);
+            this.paymentError = 'Failed to load payment form. Please try again.';
+          });
+        }, 200);
       }
     });
   }
@@ -87,6 +93,17 @@ export class CartDrawerComponent implements OnInit, OnDestroy {
     this.form.markAllAsTouched();
     if (this.form.invalid) return;
 
+    // Ensure card element is initialized before proceeding
+    if (!this.cardElementInitialized) {
+      try {
+        await this.initializeCardElement();
+      } catch (err) {
+        console.error('Failed to initialize card element before payment:', err);
+        this.paymentError = 'Payment form not ready. Please refresh and try again.';
+        return;
+      }
+    }
+
     this.isProcessing = true;
     this.paymentError = null;
 
@@ -116,7 +133,9 @@ export class CartDrawerComponent implements OnInit, OnDestroy {
       console.log('Payment intent created:', paymentResponse);
 
       // Confirm payment with Stripe
+      console.log('Confirming payment with client secret:', paymentResponse.clientSecret);
       const confirmResult = await this.stripeService.confirmPayment(paymentResponse.clientSecret);
+      console.log('Payment confirmation result:', confirmResult);
 
       if (confirmResult.error) {
         this.paymentError = confirmResult.error.message || 'Payment failed';
