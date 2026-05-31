@@ -106,7 +106,8 @@
         <app-button
           [variant]="tier.isPopular ? 'primary' : 'outline'"
           size="md"
-          class="w-full mt-auto"
+          [fullWidth]="true"
+          class="mt-auto"
           (onClick)="scrollToBooking()"
         >
           Get Started
