@@ -8,33 +8,14 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
     options.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
     {
         Title = "Luxelle API",
         Version = "v1",
-        Description = "Premium Beauty & Wellness Center API",
-        Contact = new Microsoft.OpenApi.Models.OpenApiContact
-        {
-            Name = "Luxelle Support",
-            Email = "support@luxelle.com"
-        },
-        License = new Microsoft.OpenApi.Models.OpenApiLicense
-        {
-            Name = "MIT",
-            Url = new Uri("https://opensource.org/licenses/MIT")
-        }
+        Description = "Premium Beauty & Wellness Center API"
     });
-
-    // Include XML comments if available
-    var xmlFile = $"{System.Reflection.Assembly.GetExecutingAssembly().GetName().Name}.xml";
-    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-    if (File.Exists(xmlPath))
-    {
-        options.IncludeXmlComments(xmlPath);
-    }
 });
 
 builder.Services.AddCors(options =>
@@ -99,35 +80,23 @@ using (var scope = app.Services.CreateScope())
     }
 }
 
-// Enable Swagger in all environments for API documentation
+// Enable Swagger
 app.UseSwagger();
 app.UseSwaggerUI(options =>
 {
     options.SwaggerEndpoint("/swagger/v1/swagger.json", "Luxelle API v1");
-    options.RoutePrefix = string.Empty; // Serve Swagger UI at root
-    options.DocumentTitle = "Luxelle API Documentation";
+    options.RoutePrefix = string.Empty;
+    options.DocumentTitle = "Luxelle API";
 });
 
-// Add error handling middleware
 app.UseExceptionHandler("/error");
-
-// Map error endpoint
-app.MapGet("/error", () =>
-{
-    return Results.Problem(
-        detail: "An error occurred processing your request",
-        statusCode: StatusCodes.Status500InternalServerError
-    );
-});
+app.MapGet("/error", () => Results.Problem("An error occurred", statusCode: 500));
 
 app.UseCors("AllowAngular");
 app.UseAuthorization();
 app.MapControllers();
 
 // Health check endpoint
-app.MapGet("/health", () => Results.Ok(new { status = "healthy", timestamp = DateTime.UtcNow }))
-    .WithName("Health")
-    .WithOpenApi()
-    .Produces(200);
+app.MapGet("/health", () => Results.Ok(new { status = "healthy", timestamp = DateTime.UtcNow }));
 
 app.Run();
