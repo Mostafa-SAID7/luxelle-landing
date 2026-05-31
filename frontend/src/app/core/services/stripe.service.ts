@@ -140,11 +140,15 @@ export class StripeService {
       });
 
       // Listen for change events to show errors
+      // Only show error if user has started typing (complete is false and empty is false)
       this.cardElement!.on('change', (event: any) => {
         const displayError = document.getElementById('card-error-text');
         const errorIcon = document.getElementById('card-error-icon');
         if (displayError && errorIcon) {
-          if (event.error) {
+          // Only show error if:
+          // 1. There's an actual error, AND
+          // 2. The field is not empty (user has started typing)
+          if (event.error && !event.empty) {
             displayError.textContent = event.error.message;
             errorIcon.classList.remove('hidden');
             console.error('Card element error:', event.error.message);
