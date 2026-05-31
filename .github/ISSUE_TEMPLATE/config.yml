@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Question or Discussion
+    url: https://github.com/luxelle/luxelle-landing/discussions
+    about: Ask questions or start discussions about the project
+  - name: Report a Security Issue
+    url: https://github.com/luxelle/luxelle-landing/security/advisories/new
+    about: Report security vulnerabilities responsibly
