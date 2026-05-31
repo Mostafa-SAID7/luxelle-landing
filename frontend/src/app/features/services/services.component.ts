@@ -15,6 +15,12 @@ export class ServicesComponent {
   services    = SERVICES;
   cartService = inject(CartService);
   addedIds    = signal<string[]>([]);
+  isLoading   = signal(true);
+  skeletons   = Array(8).fill(0);
+
+  constructor() {
+    setTimeout(() => this.isLoading.set(false), 700);
+  }
 
   isAdded(id: string): boolean {
     return this.addedIds().includes(id);

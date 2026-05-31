@@ -53,7 +53,7 @@ export const SERVICES: Service[] = [
     id: '7',
     name: 'Facial Treatments',
     description: 'Specialized facials targeting specific skin concerns',
-    icon: 'face',
+    icon: 'star',
     price: 140,
     duration: 60,
   },
