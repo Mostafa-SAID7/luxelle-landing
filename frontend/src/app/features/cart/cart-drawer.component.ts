@@ -46,14 +46,9 @@ export class CartDrawerComponent implements OnInit, OnDestroy {
     notes: [''],
   });
 
-  get f() { return this.form.controls; }
-
-  ngOnInit(): void {
-    // Use effect to watch for step changes
+  constructor() {
     effect(() => {
       if (this.cart.step() === 2 && !this.cardElementInitialized) {
-        // Wait longer for DOM to be fully rendered before initializing card element
-        // Increased from 200ms to 500ms to ensure all animations complete
         setTimeout(() => {
           this.initializeCardElement().catch(err => {
             console.error('Card element initialization failed:', err);
@@ -63,6 +58,10 @@ export class CartDrawerComponent implements OnInit, OnDestroy {
       }
     });
   }
+
+  get f() { return this.form.controls; }
+
+  ngOnInit(): void {}
 
   ngOnDestroy(): void {
     this.stripeService.destroyCardElement();
