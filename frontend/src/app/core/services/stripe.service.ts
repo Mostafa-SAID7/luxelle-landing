@@ -69,21 +69,32 @@ export class StripeService {
           throw new Error('Card element container #card-element not found in DOM');
         }
         console.log('Card element container found in DOM');
+        console.log('Container styles:', {
+          display: window.getComputedStyle(cardElementDiv).display,
+          visibility: window.getComputedStyle(cardElementDiv).visibility,
+          pointerEvents: window.getComputedStyle(cardElementDiv).pointerEvents,
+          width: window.getComputedStyle(cardElementDiv).width,
+          height: window.getComputedStyle(cardElementDiv).height
+        });
 
-        // Create the card element
+        // Create the card element with improved styling
         this.cardElement = this.elements.create('card', {
           style: {
             base: {
-              fontSize: '14px',
+              fontSize: '16px',
               color: '#e5e7eb',
+              fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
               '::placeholder': {
                 color: '#9ca3af'
-              }
+              },
+              lineHeight: '1.5',
+              padding: '0'
             },
             invalid: {
               color: '#f87171'
             }
-          }
+          },
+          hidePostalCode: false
         });
 
         // Mount the element
@@ -126,10 +137,16 @@ export class StripeService {
         resolve();
       });
 
-      // Also listen for errors
+      // Listen for change events to show errors
       this.cardElement!.on('change', (event: any) => {
-        if (event.error) {
-          console.error('Card element error:', event.error.message);
+        const displayError = document.getElementById('card-errors');
+        if (displayError) {
+          if (event.error) {
+            displayError.textContent = event.error.message;
+            console.error('Card element error:', event.error.message);
+          } else {
+            displayError.textContent = '';
+          }
         }
       });
     });
