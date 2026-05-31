@@ -3,6 +3,7 @@ using Luxelle.Application.Services;
 using Luxelle.Domain.Interfaces;
 using Luxelle.Infrastructure.Data;
 using Luxelle.Infrastructure.Repositories;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -89,6 +90,16 @@ app.UseSwaggerUI(options =>
 
 // Add error handling middleware
 app.UseExceptionHandler("/error");
+
+// Map error endpoint
+app.MapGet("/error", (HttpContext context) =>
+{
+    var exceptionHandler = context.Features.Get<IExceptionHandlerPathFeature>();
+    return Results.Problem(
+        detail: exceptionHandler?.Error.Message ?? "An error occurred",
+        statusCode: StatusCodes.Status500InternalServerError
+    );
+});
 
 app.UseCors("AllowAngular");
 app.UseAuthorization();
