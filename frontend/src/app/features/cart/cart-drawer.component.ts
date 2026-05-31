@@ -52,13 +52,14 @@ export class CartDrawerComponent implements OnInit, OnDestroy {
     // Use effect to watch for step changes
     effect(() => {
       if (this.cart.step() === 2 && !this.cardElementInitialized) {
-        // Wait for DOM to be fully rendered before initializing card element
+        // Wait longer for DOM to be fully rendered before initializing card element
+        // Increased from 200ms to 500ms to ensure all animations complete
         setTimeout(() => {
           this.initializeCardElement().catch(err => {
             console.error('Card element initialization failed:', err);
             this.paymentError = 'Failed to load payment form. Please try again.';
           });
-        }, 200);
+        }, 500);
       }
     });
   }

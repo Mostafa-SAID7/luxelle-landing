@@ -27,26 +27,50 @@ export class StripeService {
   private stripe: Stripe | null = null;
   private elements: StripeElements | null = null;
   private cardElement: StripeCardElement | null = null;
+  private cardElementReady = false;
 
   constructor(private http: HttpClient) {
     this.initializeStripe();
   }
 
   private async initializeStripe(): Promise<void> {
-    this.stripe = await loadStripe(environment.stripePublishableKey);
+    try {
+      this.stripe = await loadStripe(environment.stripePublishableKey);
+      console.log('Stripe loaded successfully');
+    } catch (error) {
+      console.error('Failed to load Stripe:', error);
+      throw error;
+    }
   }
 
   async initializeCardElement(): Promise<void> {
     try {
+      console.log('Starting card element initialization...');
+      
+      // Ensure Stripe is loaded
       if (!this.stripe) {
+        console.log('Stripe not loaded, initializing...');
         await this.initializeStripe();
       }
 
+      // Create elements instance if not exists
       if (!this.elements) {
+        console.log('Creating Stripe elements instance...');
         this.elements = this.stripe!.elements();
       }
 
+      // Create card element if not exists
       if (!this.cardElement) {
+        console.log('Creating card element...');
+        
+        // Verify container exists
+        const cardElementDiv = document.getElementById('card-element');
+        if (!cardElementDiv) {
+          throw new Error('Card element container #card-element not found in DOM');
+        }
+        console.log('Card element container found in DOM');
+
+        // Create the card element
         this.cardElement = this.elements.create('card', {
           style: {
             base: {
@@ -62,18 +86,53 @@ export class StripeService {
           }
         });
 
-        const cardElementDiv = document.getElementById('card-element');
-        if (!cardElementDiv) {
-          throw new Error('Card element container not found in DOM');
-        }
-        
+        // Mount the element
+        console.log('Mounting card element to DOM...');
         this.cardElement.mount(cardElementDiv);
-        console.log('Card element initialized successfully');
+
+        // Wait for ready event
+        await this.waitForCardElementReady();
+        
+        console.log('Card element initialized and ready successfully');
+      } else if (!this.cardElementReady) {
+        // Element exists but might not be ready yet
+        await this.waitForCardElementReady();
       }
     } catch (error) {
       console.error('Failed to initialize card element:', error);
+      this.cardElement = null;
+      this.cardElementReady = false;
       throw error;
     }
+  }
+
+  private waitForCardElementReady(): Promise<void> {
+    return new Promise((resolve, reject) => {
+      if (!this.cardElement) {
+        reject(new Error('Card element not created'));
+        return;
+      }
+
+      // Set a timeout to prevent infinite waiting
+      const timeout = setTimeout(() => {
+        reject(new Error('Card element ready event timeout after 5 seconds'));
+      }, 5000);
+
+      // Listen for ready event
+      this.cardElement!.on('ready', () => {
+        clearTimeout(timeout);
+        this.cardElementReady = true;
+        console.log('Card element ready event received');
+        resolve();
+      });
+
+      // Also listen for errors
+      this.cardElement!.on('change', (event: any) => {
+        if (event.error) {
+          console.error('Card element error:', event.error.message);
+        }
+      });
+    });
   }
 
   async createPaymentIntent(request: CreatePaymentIntentRequest): Promise<PaymentResponse> {
@@ -90,22 +149,38 @@ export class StripeService {
   }
 
   async confirmPayment(clientSecret: string): Promise<any> {
+    console.log('confirmPayment called with clientSecret:', clientSecret);
+    
     if (!this.stripe) {
       throw new Error('Stripe not initialized');
     }
 
     if (!this.cardElement) {
-      throw new Error('Card element not initialized');
+      throw new Error('Card element not created');
     }
 
-    return this.stripe.confirmCardPayment(clientSecret, {
-      payment_method: {
-        card: this.cardElement,
-        billing_details: {
-          name: 'Customer'
+    if (!this.cardElementReady) {
+      throw new Error('Card element not ready - please wait for the payment form to load');
+    }
+
+    console.log('Card element is ready, confirming payment...');
+    
+    try {
+      const result = await this.stripe.confirmCardPayment(clientSecret, {
+        payment_method: {
+          card: this.cardElement,
+          billing_details: {
+            name: 'Customer'
+          }
         }
-      }
-    });
+      });
+      
+      console.log('Payment confirmation result:', result);
+      return result;
+    } catch (error) {
+      console.error('Error during payment confirmation:', error);
+      throw error;
+    }
   }
 
   async confirmPaymentStatus(paymentIntentId: string): Promise<{ success: boolean; paymentIntentId: string }> {
@@ -130,6 +205,11 @@ export class StripeService {
     if (this.cardElement) {
       this.cardElement.destroy();
       this.cardElement = null;
+      this.cardElementReady = false;
     }
+  }
+
+  isCardElementReady(): boolean {
+    return this.cardElementReady && this.cardElement !== null;
   }
 }
