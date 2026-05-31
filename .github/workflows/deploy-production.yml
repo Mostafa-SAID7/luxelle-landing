@@ -65,7 +65,17 @@ jobs:
         run: dotnet publish -c Release -o ./publish
         working-directory: backend/src/Luxelle.API
 
+      - name: Check FTP Credentials
+        id: check-ftp
+        run: |
+          if [ -z "${{ secrets.MONSTERASP_FTP_SERVER }}" ] || [ -z "${{ secrets.MONSTERASP_FTP_USERNAME }}" ] || [ -z "${{ secrets.MONSTERASP_FTP_PASSWORD }}" ]; then
+            echo "has-credentials=false" >> $GITHUB_OUTPUT
+          else
+            echo "has-credentials=true" >> $GITHUB_OUTPUT
+          fi
+
       - name: Deploy to MonsterASP via FTP
+        if: steps.check-ftp.outputs.has-credentials == 'true'
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.MONSTERASP_FTP_SERVER }}
@@ -74,4 +84,13 @@ jobs:
           local-dir: ./backend/src/Luxelle.API/publish/
           server-dir: ./
           state-name: .ftp-deploy-sync-state.json
+
+      - name: FTP Deployment Skipped
+        if: steps.check-ftp.outputs.has-credentials != 'true'
+        run: |
+          echo "⚠️  FTP deployment skipped - MonsterASP credentials not configured"
+          echo "To enable backend deployment, add these secrets to your GitHub repository:"
+          echo "  - MONSTERASP_FTP_SERVER"
+          echo "  - MONSTERASP_FTP_USERNAME"
+          echo "  - MONSTERASP_FTP_PASSWORD"
 
