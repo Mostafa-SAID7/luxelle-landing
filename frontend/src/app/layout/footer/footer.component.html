@@ -103,15 +103,33 @@
     <!-- Divider + bottom bar -->
     <div class="border-t border-luxelle-subtle pt-8 flex flex-col sm:flex-row justify-between items-center gap-4">
       <p class="text-luxelle-tertiary text-xs">
-        &copy; 2024 Luxelle Beauty &amp; Wellness. All rights reserved.
+        &copy; 2025 Luxelle Beauty &amp; Wellness. All rights reserved.
       </p>
       <div class="flex items-center gap-6">
-        <a href="#" class="text-luxelle-tertiary hover:text-rose-gold transition-colors text-xs">Privacy Policy</a>
+        <button
+          (click)="openLegal('privacy')"
+          class="text-luxelle-tertiary hover:text-rose-gold transition-colors text-xs"
+        >
+          Privacy Policy
+        </button>
         <span class="w-1 h-1 rounded-full bg-luxelle-tertiary/40"></span>
-        <a href="#" class="text-luxelle-tertiary hover:text-rose-gold transition-colors text-xs">Terms of Service</a>
+        <button
+          (click)="openLegal('terms')"
+          class="text-luxelle-tertiary hover:text-rose-gold transition-colors text-xs"
+        >
+          Terms of Service
+        </button>
         <span class="w-1 h-1 rounded-full bg-luxelle-tertiary/40"></span>
-        <a href="#" class="text-luxelle-tertiary hover:text-rose-gold transition-colors text-xs">Cookies</a>
+        <button
+          (click)="openLegal('cookies')"
+          class="text-luxelle-tertiary hover:text-rose-gold transition-colors text-xs"
+        >
+          Cookies
+        </button>
       </div>
     </div>
   </div>
 </footer>
+
+<!-- Legal Modal -->
+<app-legal-modal #legalModal></app-legal-modal>

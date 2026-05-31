@@ -135,7 +135,7 @@ export const NAVIGATION_LINKS = [
   { label: 'Services', href: '#services' },
   { label: 'Pricing', href: '#pricing' },
   { label: 'Gallery', href: '#gallery' },
-  { label: 'Contact', href: '#contact' },
+  { label: 'Contact', href: '#booking' },
 ];
 
 export const SOCIAL_LINKS = [
