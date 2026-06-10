@@ -29,7 +29,7 @@ jobs:
         working-directory: frontend
 
       - name: Deploy to Netlify
-        uses: nwtgck/actions-netlify@v2.1
+        uses: nwtgck/actions-netlify@v4.0
         with:
           publish-dir: './frontend/dist/luxelle-landing-page'
           production-branch: main
