@@ -113,21 +113,17 @@ npm run build:prod
 ### vercel.json
 ```json
 {
-  "version": 2,
-  "buildCommand": "cd frontend && npm run build:prod",
-  "installCommand": "cd frontend && npm ci --legacy-peer-deps",
-  "outputDirectory": "frontend/dist/luxelle-landing-page/browser",
-  "framework": "angular",
-  "nodejs": "22",
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "/index.html",
-      "status": 200
-    }
-  ]
+  "buildCommand": "npm run build:prod",
+  "installCommand": "npm ci --legacy-peer-deps",
+  "outputDirectory": "dist/luxelle-landing-page/browser"
 }
 ```
+
+**Note:** Set the following in Vercel UI Project Settings:
+- **Root Directory:** `frontend`
+- **Build Command:** `npm run build:prod`
+- **Install Command:** `npm ci --legacy-peer-deps`
+- **Output Directory:** `dist/luxelle-landing-page/browser`
 
 ### netlify.toml
 ```toml
@@ -153,13 +149,28 @@ legacy-peer-deps=true
 
 ## Verification Checklist
 
+### GitHub Configuration
 - ✅ `vercel.json` exists and is correctly configured
 - ✅ `frontend/package.json` uses `@lucide/angular@^0.417.0`
 - ✅ `frontend/package-lock.json` removed (will regenerate on first deploy)
 - ✅ `netlify.toml` configured for monorepo
 - ✅ `.npmrc` has `legacy-peer-deps=true`
 - ✅ `.nvmrc` specifies Node.js 22
-- ✅ Both deployment platforms configured
+
+### Vercel UI Project Settings
+In your Vercel project dashboard, set these values:
+
+**Build & Development Settings:**
+- Root Directory: **`frontend`**
+- Build Command: **`npm run build:prod`**
+- Install Command: **`npm ci --legacy-peer-deps`**
+- Output Directory: **`dist/luxelle-landing-page/browser`**
+
+**Environment Variables (if needed):**
+- NODE_ENV: `production`
+- NODE_VERSION: `22`
+
+After setting these, every push to `main` will deploy successfully.
 
 ## Git Commits
 
