@@ -45,4 +45,6 @@ jobs:
       run: dotnet restore backend/
     
     - name: Check formatting
-      run: dotnet format backend/ --verify-no-changes --verbosity diagnostic
+      run: |
+        dotnet format backend/ --verbosity diagnostic
+        git diff --exit-code -- backend/ || (echo "❌ Backend C# code formatting issues found. Run 'dotnet format backend/' locally and commit the changes." && exit 1)
