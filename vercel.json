@@ -1,6 +1,10 @@
 {
+  "rootDirectory": "frontend",
   "buildCommand": "npm run build:prod",
   "installCommand": "npm install --legacy-peer-deps",
-  "outputDirectory": "dist/luxelle-landing-page/browser"
+  "outputDirectory": "dist/luxelle-landing-page",
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
 }
 
