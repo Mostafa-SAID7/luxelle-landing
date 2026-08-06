@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { firstValueFrom } from 'rxjs';
 import { loadStripe, Stripe, StripeElements, StripeCardElement } from '@stripe/stripe-js';
 import { environment } from '../../../environments/environment';
 
@@ -168,11 +169,9 @@ export class StripeService {
 
   async createPaymentIntent(request: CreatePaymentIntentRequest): Promise<PaymentResponse> {
     try {
-      const response = await this.http.post<PaymentResponse>(
-        `${environment.apiUrl}/payments/create-payment-intent`,
-        request
-      ).toPromise();
-      return response!;
+      return await firstValueFrom(
+        this.http.post<PaymentResponse>(`${environment.apiUrl}/payments/create-payment-intent`, request)
+      );
     } catch (error: any) {
       console.error('Payment intent creation error:', error);
       throw new Error(error?.error?.error || error?.message || 'Failed to create payment intent');
@@ -216,10 +215,9 @@ export class StripeService {
 
   async confirmPaymentStatus(paymentIntentId: string): Promise<{ success: boolean; paymentIntentId: string }> {
     try {
-      const response = await this.http.get<{ success: boolean; paymentIntentId: string }>(
-        `${environment.apiUrl}/payments/confirm-payment/${paymentIntentId}`
-      ).toPromise();
-      return response!;
+      return await firstValueFrom(
+        this.http.get<{ success: boolean; paymentIntentId: string }>(`${environment.apiUrl}/payments/confirm-payment/${paymentIntentId}`)
+      );
     } catch (error: any) {
       console.error('Payment status confirmation error:', error);
       throw new Error(error?.error?.error || error?.message || 'Failed to confirm payment status');
@@ -227,9 +225,9 @@ export class StripeService {
   }
 
   getPublishableKey(): Promise<{ publishableKey: string }> {
-    return this.http.get<{ publishableKey: string }>(
-      `${environment.apiUrl}/payments/publishable-key`
-    ).toPromise() as Promise<{ publishableKey: string }>;
+    return firstValueFrom(
+      this.http.get<{ publishableKey: string }>(`${environment.apiUrl}/payments/publishable-key`)
+    );
   }
 
   destroyCardElement(): void {
