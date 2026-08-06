@@ -1,4 +1,4 @@
-namespace Luxelle.Application.DTOs;
+﻿namespace Luxelle.Application.DTOs;
 
 public class PricingTierDto
 {

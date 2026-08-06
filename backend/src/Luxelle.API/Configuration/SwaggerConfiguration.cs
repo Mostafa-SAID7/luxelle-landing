@@ -1,4 +1,4 @@
-namespace Luxelle.API.Configuration;
+﻿namespace Luxelle.API.Configuration;
 
 public static class SwaggerConfiguration
 {

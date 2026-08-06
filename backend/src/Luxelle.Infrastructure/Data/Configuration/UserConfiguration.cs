@@ -1,4 +1,4 @@
-using Luxelle.Domain.Entities;
+﻿using Luxelle.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

@@ -1,4 +1,4 @@
-namespace Luxelle.Domain.Entities;
+﻿namespace Luxelle.Domain.Entities;
 
 public class Service
 {

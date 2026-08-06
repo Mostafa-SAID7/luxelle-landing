@@ -1,4 +1,4 @@
-using Luxelle.Application.DTOs;
+﻿using Luxelle.Application.DTOs;
 
 namespace Luxelle.Application.Interfaces;
 

@@ -1,4 +1,4 @@
-using System.Text.Json;
+﻿using System.Text.Json;
 using Luxelle.Domain.Entities;
 using Luxelle.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;

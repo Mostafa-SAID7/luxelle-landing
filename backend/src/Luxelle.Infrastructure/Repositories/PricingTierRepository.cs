@@ -1,4 +1,4 @@
-using Luxelle.Domain.Entities;
+﻿using Luxelle.Domain.Entities;
 using Luxelle.Domain.Interfaces;
 using Luxelle.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;

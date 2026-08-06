@@ -1,4 +1,4 @@
-using Luxelle.Domain.Enums;
+﻿using Luxelle.Domain.Enums;
 
 namespace Luxelle.Domain.Entities;
 

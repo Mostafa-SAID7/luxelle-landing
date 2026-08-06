@@ -1,4 +1,4 @@
-namespace Luxelle.Application.Payments.DTOs;
+﻿namespace Luxelle.Application.Payments.DTOs;
 
 public class PaymentResponseDto
 {

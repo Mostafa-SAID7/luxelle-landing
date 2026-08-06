@@ -1,4 +1,4 @@
-namespace Luxelle.Application.Common.Models;
+﻿namespace Luxelle.Application.Common.Models;
 
 public class StripeOptions
 {

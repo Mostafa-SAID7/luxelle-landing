@@ -1,4 +1,4 @@
-using Luxelle.Application.Common.Models;
+﻿using Luxelle.Application.Common.Models;
 using Luxelle.Application.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;

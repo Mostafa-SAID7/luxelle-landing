@@ -1,4 +1,4 @@
-namespace Luxelle.Domain.Interfaces;
+﻿namespace Luxelle.Domain.Interfaces;
 
 public interface IRepository<T> where T : class
 {

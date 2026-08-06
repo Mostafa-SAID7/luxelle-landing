@@ -1,4 +1,4 @@
-using Luxelle.API.Configuration;
+﻿using Luxelle.API.Configuration;
 
 try
 {

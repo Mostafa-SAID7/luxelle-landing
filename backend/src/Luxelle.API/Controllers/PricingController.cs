@@ -1,4 +1,4 @@
-using Luxelle.Application.Interfaces;
+﻿using Luxelle.Application.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Luxelle.API.Controllers;

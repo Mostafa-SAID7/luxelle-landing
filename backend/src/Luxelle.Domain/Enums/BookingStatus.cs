@@ -1,4 +1,4 @@
-namespace Luxelle.Domain.Enums;
+﻿namespace Luxelle.Domain.Enums;
 
 public enum BookingStatus
 {
