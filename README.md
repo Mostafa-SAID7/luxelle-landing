@@ -17,6 +17,9 @@ To keep this file clean, detailed documentation has been split up logically with
 - **[Development Setup](docs/development.md)**: Details on how to install dependencies, run the dev server locally, and execute testing suites.
 - **[Deployment & Automation](docs/deployment.md)**: Information regarding our active GitHub Actions, CI configurations, and static hosting deployment strategies.
 - **[UI & Styling Guidelines](docs/ui-guidelines.md)**: Important design principles concerning Tailwind CSS usage, responsive strategy, and iconography.
+- **[Git Workflow & Branching](docs/git-workflow.md)**: Complete guide on branching strategy, commit conventions, tagging, and release process. **Read this before contributing!**
+
+For a quick start on git workflows, see the **[Git Workflow Quick Start](GIT_WORKFLOW_QUICK_START.md)** guide.
 
 ## 🤝 Community & Governance
 
