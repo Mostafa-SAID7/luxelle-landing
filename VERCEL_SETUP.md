@@ -13,7 +13,7 @@ https://vercel.com/your-team/luxelle-landing/settings
 |-------|-------|
 | Root Directory | `frontend` |
 | Build Command | `npm run build:prod` |
-| Install Command | `npm ci --legacy-peer-deps` |
+| Install Command | `npm install --legacy-peer-deps` |
 | Output Directory | `dist/luxelle-landing-page/browser` |
 
 ### Step 4: Save Settings

@@ -114,7 +114,7 @@ npm run build:prod
 ```json
 {
   "buildCommand": "npm run build:prod",
-  "installCommand": "npm ci --legacy-peer-deps",
+  "installCommand": "npm install --legacy-peer-deps",
   "outputDirectory": "dist/luxelle-landing-page/browser"
 }
 ```
