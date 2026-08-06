@@ -1,5 +1,4 @@
 {
-  "rootDirectory": "frontend",
   "buildCommand": "npm run build:prod",
   "installCommand": "npm install --legacy-peer-deps",
   "outputDirectory": "dist/luxelle-landing-page",
