@@ -65,7 +65,8 @@ public class StripeService : IStripeService
             var service = new PaymentIntentService();
             var paymentIntent = await service.GetAsync(paymentIntentId);
 
-            _logger.LogInformation("Payment intent status: {PaymentIntentId} - {Status}", paymentIntentId, paymentIntent.Status);
+            var sanitizedId = paymentIntentId.Replace("\r", "").Replace("\n", "");
+            _logger.LogInformation("Payment intent status: {PaymentIntentId} - {Status}", sanitizedId, paymentIntent.Status);
 
             return paymentIntent.Status == "succeeded";
         }
