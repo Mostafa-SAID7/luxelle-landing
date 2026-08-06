@@ -2,6 +2,7 @@ import { Component, OnInit, inject, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { firstValueFrom } from 'rxjs';
 import { ScrollRevealDirective } from '../../shared/directives/scroll-reveal.directive';
 import { CardComponent } from '../../shared/components/ui/card/card.component';
 import { ButtonComponent } from '../../shared/components/ui/button/button.component';
@@ -115,9 +116,9 @@ export class BookingComponent implements OnInit {
     };
 
     try {
-      const res = await this.http
-        .post<{ id: number }>(`${environment.apiUrl}/bookings/guest`, payload)
-        .toPromise();
+      const res = await firstValueFrom(
+        this.http.post<{ id: number }>(`${environment.apiUrl}/bookings/guest`, payload)
+      );
       const ref = `LX-${String(res?.id ?? 0).padStart(5, '0')}`;
       this.bookingRef.set(ref);
       this.notify.success(`Appointment confirmed! Ref: ${ref} ✨`);
