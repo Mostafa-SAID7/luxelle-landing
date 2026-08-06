@@ -1,0 +1,36 @@
+# Auto detect text files and perform LF normalization
+* text=auto
+
+# C# source files - always store and checkout as LF
+*.cs text eol=lf
+*.csx text eol=lf
+
+# .NET project files
+*.csproj text eol=lf
+*.sln text eol=lf
+*.props text eol=lf
+*.targets text eol=lf
+
+# Config / editor files
+*.editorconfig text eol=lf
+*.json text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.md text eol=lf
+*.xml text eol=lf
+*.html text eol=lf
+*.css text eol=lf
+*.ts text eol=lf
+*.js text eol=lf
+
+# Binary files - never convert
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.otf binary
+*.eot binary
