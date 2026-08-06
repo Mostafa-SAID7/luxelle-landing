@@ -36,7 +36,7 @@ public static class DatabaseConfiguration
             {
                 var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
                 logger.LogInformation("Checking database connection...");
-                
+
                 // Test connection with timeout
                 using (var cts = new System.Threading.CancellationTokenSource(TimeSpan.FromSeconds(10)))
                 {
@@ -47,9 +47,9 @@ public static class DatabaseConfiguration
                         return;
                     }
                 }
-                
+
                 logger.LogInformation("Database connection successful");
-                
+
                 // Create database if it doesn't exist
                 logger.LogInformation("Ensuring database is created...");
                 await db.Database.EnsureCreatedAsync();
@@ -59,10 +59,10 @@ public static class DatabaseConfiguration
                 await RuntimeDataSeeder.SeedAsync(db);
 
                 // Verify tables
-                var users    = await db.Users.CountAsync();
+                var users = await db.Users.CountAsync();
                 var services = await db.Services.CountAsync();
                 var bookings = await db.Bookings.CountAsync();
-                var pricing  = await db.PricingTiers.CountAsync();
+                var pricing = await db.PricingTiers.CountAsync();
 
                 logger.LogInformation(
                     "Database ready — Users: {U}, Services: {S}, Bookings: {B}, PricingTiers: {P}",

@@ -17,13 +17,13 @@ public class PricingTierService : IPricingTierService
 
     private static PricingTierDto MapToDto(PricingTier p) => new()
     {
-        Id          = p.Id,
-        Name        = p.Name,
+        Id = p.Id,
+        Name = p.Name,
         Description = p.Description,
-        Price       = p.Price,
-        Icon        = p.Icon,
-        IsPopular   = p.IsPopular,
+        Price = p.Price,
+        Icon = p.Icon,
+        IsPopular = p.IsPopular,
         DisplayOrder = p.DisplayOrder,
-        Features    = JsonSerializer.Deserialize<List<string>>(p.FeaturesJson) ?? new List<string>(),
+        Features = JsonSerializer.Deserialize<List<string>>(p.FeaturesJson) ?? new List<string>(),
     };
 }

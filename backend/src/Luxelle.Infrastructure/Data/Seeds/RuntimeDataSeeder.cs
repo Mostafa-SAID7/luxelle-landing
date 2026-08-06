@@ -23,7 +23,7 @@ public static class RuntimeDataSeeder
     private static async Task SeedServicesAsync(AppDbContext db)
     {
         var existingServices = await db.Services.ToListAsync();
-        var existingNames    = existingServices.Select(s => s.Name).ToHashSet(StringComparer.OrdinalIgnoreCase);
+        var existingNames = existingServices.Select(s => s.Name).ToHashSet(StringComparer.OrdinalIgnoreCase);
 
         bool changed = false;
 
@@ -36,12 +36,12 @@ public static class RuntimeDataSeeder
 
             if (existing is not null)
             {
-                existing.Name            = target.Name;
-                existing.Description     = target.Description;
-                existing.Category        = target.Category;
-                existing.Price           = target.Price;
+                existing.Name = target.Name;
+                existing.Description = target.Description;
+                existing.Category = target.Category;
+                existing.Price = target.Price;
                 existing.DurationMinutes = target.DurationMinutes;
-                existing.IsAvailable     = target.IsAvailable;
+                existing.IsAvailable = target.IsAvailable;
                 db.Services.Update(existing);
                 existingNames.Add(target.Name);
                 changed = true;
