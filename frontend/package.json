@@ -10,6 +10,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "test:run": "ng test --watch=false",
+    "test:ci": "ng test --watch=false --browsers=ChromeHeadless",
     "lint": "ng lint"
   },
   "private": true,
